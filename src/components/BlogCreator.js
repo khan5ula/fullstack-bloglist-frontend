@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const BlogCreator = ({ blogs, setBlogs }) => {
+const BlogCreator = ({ blogs, setBlogs, notificationMessage, setNotificationMessage, notificationType, setNotificationType }) => {
   const [blog, setBlog] = useState({
     title: '',
     author: '',
@@ -34,10 +34,23 @@ const BlogCreator = ({ blogs, setBlogs }) => {
         console.log(`Adding a blog: ${newBlog.title}`)
         setBlogs(blogs.concat(newBlog))
         setBlog({ title: '', author: '', url: '' })
+
+        /* Inform user of successful operation */
+        setNotificationType('success')
+        setNotificationMessage(`a new blog ${blog.title} added`)
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
       })
+
+      /* Inform user of error */
       .catch(error => {
-        /* Future error handling block */
         console.error(`Error occured while adding the blog: ${error}`);
+        setNotificationType('error')
+        setNotificationMessage('new blog could not be added')
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
       })
   }
 

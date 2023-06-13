@@ -2,7 +2,7 @@ import LoginForm from './LoginForm'
 import BasicButton from './BasicButton'
 import BlogCreator from './BlogCreator'
 
-const LoginSwitch = ({ user, blogs, setBlogs, Blog, handleLogout, ...loginProps }) => {
+const LoginSwitch = ({ user, blogs, setBlogs, Blog, handleLogout, notificationMessage, setNotificationMessage, notificationType, setNotificationType, ...loginProps }) => {
   if (user === null) {
     return (
       <div>
@@ -21,7 +21,14 @@ const LoginSwitch = ({ user, blogs, setBlogs, Blog, handleLogout, ...loginProps 
         <BasicButton event={handleLogout} text={'logout'} />
         <br />
       </p>
-      <BlogCreator blogs={blogs} setBlogs={setBlogs}/>
+      <BlogCreator
+        blogs={blogs}
+        setBlogs={setBlogs}
+        notificationMessage={notificationMessage}
+        setNotificationMessage={setNotificationMessage}
+        notificationType={notificationType}
+        setNotificationType={setNotificationType}
+      />
 
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />

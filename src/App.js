@@ -7,7 +7,8 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [notificationMessage, setNotificationMessage] = useState('')
+  const [notificationType, setNotificationType] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -40,13 +41,24 @@ const App = () => {
 
       blogService.setToken(user.token)
       setUser(user)
+
+      /* Inform user of successful operation */
+      setNotificationType('success')
+      setNotificationMessage(`${user.name} logged in`)
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
+
       console.log(`${user.name} logged in`)
       setUsername('')
       setPassword('')
+
+      /* Inform user of error */
     } catch (exception) {
-      setErrorMessage('wrong credentials')
+      setNotificationType('error')
+      setNotificationMessage('wrong username or password')
       setTimeout(() => {
-        setErrorMessage(null)
+        setNotificationMessage(null)
       }, 5000)
     }
   }
@@ -55,17 +67,28 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogUser')
     console.log(`Logging out user: ${user.name}`)
     setUser(null)
+
+    /* Inform user of successful operation */
+    setNotificationType('success')
+    setNotificationMessage(`${user.name} logged out`)
+    setTimeout(() => {
+      setNotificationMessage(null)
+    }, 5000)
   }
 
   return (
     <div>
-      <Notification message={errorMessage} />
+      <Notification type={notificationType} message={notificationMessage} />
       <LoginSwitch
         user={user}
         blogs={blogs}
         setBlogs={setBlogs}
         Blog={Blog}
         handleLogout={handleLogout}
+        notificationMessage={notificationMessage}
+        setNotificationMessage={setNotificationMessage}
+        notificationType={notificationType}
+        setNotificationType={setNotificationType}
         username={username}
         password={password}
         setUsername={setUsername}
