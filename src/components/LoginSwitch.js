@@ -1,6 +1,7 @@
-import LoginForm from './LoginForm';
+import LoginForm from './LoginForm'
+import BasicButton from './BasicButton'
 
-const LoginSwitch = ({ user, blogs, Blog, ...loginProps }) => {
+const LoginSwitch = ({ user, blogs, Blog, handleLogout, ...loginProps }) => {
   if (user === null) {
     return (
       <div>
@@ -13,6 +14,13 @@ const LoginSwitch = ({ user, blogs, Blog, ...loginProps }) => {
   return (
     <div>
       <h2>blogs</h2>
+      <p>
+        {user.name} logged in
+        {' '}
+        {console.log(`User: ${user.name} logged in`)}
+        <BasicButton event={handleLogout} text={'logout'} />
+      </p>
+
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
