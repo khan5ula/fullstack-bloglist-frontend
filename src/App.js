@@ -40,6 +40,7 @@ const App = () => {
 
       blogService.setToken(user.token)
       setUser(user)
+      console.log(`${user.name} logged in`)
       setUsername('')
       setPassword('')
     } catch (exception) {
@@ -62,6 +63,7 @@ const App = () => {
       <LoginSwitch
         user={user}
         blogs={blogs}
+        setBlogs={setBlogs}
         Blog={Blog}
         handleLogout={handleLogout}
         username={username}
