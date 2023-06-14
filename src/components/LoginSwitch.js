@@ -4,6 +4,7 @@ import LoginForm from './LoginForm'
 import BasicButton from './BasicButton'
 import BlogCreator from './BlogCreator'
 import Togglable from './Togglable'
+import Blog from './Blog'
 
 /*  
     This component acts as a mediator between App,
@@ -52,7 +53,7 @@ const LoginSwitch = ({ props }) => {
 
       {/* Print blogs from the database */}
       {props.blogs.map(blog =>
-        <props.Blog key={blog.id} blog={blog}/>
+        <Blog key={blog.id} blog={blog}/>
       )}
     </div>
   )

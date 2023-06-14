@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Blog from './components/Blog'
 import Notification from './components/Notification'
 import LoginSwitch from './components/LoginSwitch'
 import blogService from './services/blogs'
@@ -84,7 +83,6 @@ const App = () => {
           user,
           blogs,
           setBlogs,
-          Blog,
           handleLogout,
           notificationMessage,
           setNotificationMessage,

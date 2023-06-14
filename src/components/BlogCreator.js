@@ -32,9 +32,11 @@ const BlogCreator = ({ blogs, setBlogs, notificationMessage, setNotificationMess
 
     blogService
       .create(newBlog)
-      .then(newBlog => {
+      .then(returnedBlog => {
+        console.log({newBlog})
         console.log(`Adding a blog: ${newBlog.title}`)
-        setBlogs(blogs.concat(newBlog))
+        returnedBlog.user = { name: user.name, id: returnedBlog.user }
+        setBlogs(blogs.concat(returnedBlog))
         setBlog({ title: '', author: '', url: '' })
 
         /* Inform user of successful operation */
