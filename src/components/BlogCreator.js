@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const BlogCreator = ({ blogs, setBlogs, notificationMessage, setNotificationMessage, notificationType, setNotificationType }) => {
+const BlogCreator = ({ blogs, setBlogs, notificationMessage, setNotificationMessage, notificationType, setNotificationType, user }) => {
   const [blog, setBlog] = useState({
     title: '',
     author: '',
-    url: ''
+    url: '',
+    user: ''
   })
 
   const handleTitleChange = (event) => {
@@ -25,7 +26,8 @@ const BlogCreator = ({ blogs, setBlogs, notificationMessage, setNotificationMess
     const newBlog = {
       title: blog.title,
       author: blog.author,
-      url: blog.url
+      url: blog.url,
+      user: user.name
     }
 
     blogService

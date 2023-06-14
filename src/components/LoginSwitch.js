@@ -45,13 +45,14 @@ const LoginSwitch = ({ props }) => {
           setNotificationMessage={props.setNotificationMessage}
           notificationType={props.notificationType}
           setNotificationType={props.setNotificationType}
+          user={props.user}
         />
       </Togglable>
       <br />
 
       {/* Print blogs from the database */}
       {props.blogs.map(blog =>
-        <props.Blog key={blog.id} blog={blog} />
+        <props.Blog key={blog.id} blog={blog}/>
       )}
     </div>
   )

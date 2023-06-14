@@ -10,8 +10,10 @@ const Blog = ({ blog }) => {
 
   return (
     <div className='blog'>
+
+      { /* Render blog title */ }
       <div className='blogTitle'>
-        {blog.title}
+        {blog.title}{', '}{blog.author}
         {' '}
         <BasicButton 
           event={toggleVisibility} 
@@ -19,15 +21,20 @@ const Blog = ({ blog }) => {
         />
       </div>
 
-      {/* Show blog details if visibility is toggled */}
+      { /* Show blog details if visibility is toggled */}
       {visible && (
         <>
+          { /* Render blog url */ }
           <div className='blogUrl'><a href={blog.url}>{blog.url}</a><br /></div>
+
+          { /* Render blog likes */ }
           likes: {blog.likes} <BasicButton 
           event={() => console.log('Like feature is not yet implemented')} 
           text={'like'}
         /><br />
-          {'\u{1F464}'}{blog.author} <br />
+
+          { /* Render user who posted the blog */}
+          {'\u{1F464}'}{blog.user.name} <br />
         </>
       )}
     </div>
