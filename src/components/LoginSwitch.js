@@ -40,6 +40,7 @@ const LoginSwitch = ({ props }) => {
       <Togglable buttonLabel="new note" ref={blogCreatorRef}>
         <BlogCreator
           setBlogs={props.setBlogs}
+          blogs={props.blogs}
           notificationMessage={props.notificationMessage}
           setNotificationMessage={props.setNotificationMessage}
           notificationType={props.notificationType}

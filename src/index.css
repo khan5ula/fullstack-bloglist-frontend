@@ -4,9 +4,20 @@ h2 {
 }
 
 .blog {
-  color: grey;
-  padding-top: 5px;
+  color: black;
+  padding-top: 14px;
+  padding-bottom: 10px;
+  padding-left: 5px;
   font-size: 15px;
+  margin-bottom: 10px;
+  border: solid;
+  border-color:wheat;
+  background-color:ivory;
+  width: 500px;
+}
+
+.blogTitle {
+  font-size: 18px;
 }
 
 .success {
