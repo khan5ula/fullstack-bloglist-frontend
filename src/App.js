@@ -80,21 +80,24 @@ const App = () => {
     <div>
       <Notification type={notificationType} message={notificationMessage} />
       <LoginSwitch
-        user={user}
-        blogs={blogs}
-        setBlogs={setBlogs}
-        Blog={Blog}
-        handleLogout={handleLogout}
-        notificationMessage={notificationMessage}
-        setNotificationMessage={setNotificationMessage}
-        notificationType={notificationType}
-        setNotificationType={setNotificationType}
-        username={username}
-        password={password}
-        setUsername={setUsername}
-        setPassword={setPassword}
-        handleLogin={handleLogin}
+        props={{
+          user,
+          blogs,
+          setBlogs,
+          Blog,
+          handleLogout,
+          notificationMessage,
+          setNotificationMessage,
+          notificationType,
+          setNotificationType,
+          username,
+          password,
+          setUsername,
+          setPassword,
+          handleLogin,
+        }}
       />
+
     </div>
   )
 }
