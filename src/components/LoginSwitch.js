@@ -37,7 +37,7 @@ const LoginSwitch = ({ props }) => {
       </p>
 
       {/* Toggle visible functionality for blog adding */}
-      <Togglable buttonLabel="new note" ref={blogCreatorRef}>
+      <Togglable buttonLabel="create new blog" ref={blogCreatorRef}>
         <BlogCreator
           setBlogs={props.setBlogs}
           blogs={props.blogs}

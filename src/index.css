@@ -7,17 +7,20 @@ h2 {
   color: black;
   padding-top: 14px;
   padding-bottom: 10px;
-  padding-left: 5px;
+  padding-left: 15px;
   font-size: 15px;
   margin-bottom: 10px;
-  border: solid;
-  border-color:wheat;
-  background-color:ivory;
+  background-color:rgb(238, 250, 222);
+  border-radius: 10px;
   width: 500px;
 }
 
 .blogTitle {
-  font-size: 18px;
+  font-size: 21px;
+}
+
+.blogUrl {
+  cursor: pointer;
 }
 
 .success {
@@ -38,4 +41,9 @@ h2 {
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
+}
+
+.formLabel {
+  display: inline-block;
+  min-width: 50px;
 }

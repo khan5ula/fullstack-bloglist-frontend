@@ -56,27 +56,27 @@ const BlogCreator = ({ blogs, setBlogs, notificationMessage, setNotificationMess
 
   const blogForm = () => (
     <form onSubmit={addBlog}>
-      <label htmlFor="title">title:</label>
+      <label className="formLabel" htmlFor="title">title:</label>
       <input
         id='title'
         value={blog.title}
         onChange={handleTitleChange}
       />
       <br />
-      <label htmlFor="title">author:</label>
+      <label className="formLabel" htmlFor="title">author:</label>
       <input
         id='author'
         value={blog.author}
         onChange={handleAuthorChange}
       />
       <br />
-      <label htmlFor="title">url:</label>
+      <label className="formLabel" htmlFor="title">url:</label>
       <input
         id='url'
         value={blog.url}
         onChange={handleUrlChange}
       />
-      <br />
+      <br /><br />
       <button type="submit">create</button>
     </form>
   )
