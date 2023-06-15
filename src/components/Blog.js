@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import BasicButton from './BasicButton'
+import blogService from '../services/blogs'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, setNotificationMessage, setNotificationType, setBlogs, blogs }) => {
   const [visible, setVisible] = useState(false)
 
   const toggleVisibility = () => {
@@ -27,7 +28,7 @@ const Blog = ({ blog }) => {
     <div>
       likes: {blog.likes}{' '}
       <BasicButton
-        event={() => console.log('Like feature is not yet implemented')}
+        event={handleLike}
         text={'like'}
       />
     </div>
@@ -36,6 +37,41 @@ const Blog = ({ blog }) => {
   const userInfo = () => (
     <div>{'\u{1F464}'}{blog.user.name} <br /></div>
   )
+
+  const handleLike = (event) => {
+    event.preventDefault()
+
+    const updatedBlog = {
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: blog.likes + 1,
+      user: blog.user.id
+    }
+
+    blogService
+      .update(blog.id, updatedBlog)
+      .then(updatedBlog => {
+        setBlogs(blogs.map(b => b.id === blog.id ? updatedBlog : b))
+
+        /* Inform user of successful operation */
+        setNotificationType('success')
+        setNotificationMessage(`liked blog: ${blog.title}, ${blog.author}`)
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
+      })
+
+      /* Inform user of error */
+      .catch(error => {
+        setNotificationType('error')
+        setNotificationMessage(`updating blog likes failed: ${error}`)
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
+      })
+  }
+
 
   return (
     <div className='blog'>

@@ -48,7 +48,7 @@ const App = () => {
         setNotificationMessage(null)
       }, 5000)
 
-      console.log(`${user.name} logged in`)
+      console.log(`asdfasdfasdf${user.name} logged in`)
       setUsername('')
       setPassword('')
 
@@ -84,9 +84,7 @@ const App = () => {
           blogs,
           setBlogs,
           handleLogout,
-          notificationMessage,
           setNotificationMessage,
-          notificationType,
           setNotificationType,
           username,
           password,

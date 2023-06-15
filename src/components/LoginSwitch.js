@@ -42,9 +42,7 @@ const LoginSwitch = ({ props }) => {
         <BlogCreator
           setBlogs={props.setBlogs}
           blogs={props.blogs}
-          notificationMessage={props.notificationMessage}
           setNotificationMessage={props.setNotificationMessage}
-          notificationType={props.notificationType}
           setNotificationType={props.setNotificationType}
           user={props.user}
         />
@@ -53,7 +51,14 @@ const LoginSwitch = ({ props }) => {
 
       {/* Print blogs from the database */}
       {props.blogs.map(blog =>
-        <Blog key={blog.id} blog={blog}/>
+        <Blog
+          key={blog.id}
+          blog={blog}
+          setNotificationMessage={props.setNotificationMessage}
+          setNotificationType={props.setNotificationType}
+          setBlogs={props.setBlogs}
+          blogs={props.blogs}
+        />
       )}
     </div>
   )

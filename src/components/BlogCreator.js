@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const BlogCreator = ({ blogs, setBlogs, notificationMessage, setNotificationMessage, notificationType, setNotificationType, user }) => {
+const BlogCreator = ({ blogs, setBlogs, setNotificationMessage, setNotificationType, user }) => {
   const [blog, setBlog] = useState({
     title: '',
     author: '',
