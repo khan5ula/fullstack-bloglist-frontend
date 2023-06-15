@@ -52,7 +52,8 @@ const Blog = ({ blog, setNotificationMessage, setNotificationType, setBlogs, blo
     blogService
       .update(blog.id, updatedBlog)
       .then(updatedBlog => {
-        setBlogs(blogs.map(b => b.id === blog.id ? updatedBlog : b))
+        const updatedBlogs = blogs.map(b => b.id === blog.id ? updatedBlog : b)
+        setBlogs(updatedBlogs.sort((blogA, blogB) => blogB.likes - blogA.likes))
 
         /* Inform user of successful operation */
         setNotificationType('success')
@@ -71,7 +72,6 @@ const Blog = ({ blog, setNotificationMessage, setNotificationType, setBlogs, blo
         }, 5000)
       })
   }
-
 
   return (
     <div className='blog'>
