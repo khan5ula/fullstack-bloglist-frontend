@@ -38,6 +38,41 @@ const Blog = ({ blog, setNotificationMessage, setNotificationType, setBlogs, blo
     <div>{'\u{1F464}'}{blog.user.name} <br /></div>
   )
 
+  const handleDelete = (event) => {
+    const removedId = blog.id
+    const removedTitle = blog.title
+    event.preventDefault()
+
+    if (window.confirm(`Are you sure you want to remove blog ${removedTitle}?`)) {
+      blogService
+        .remove(blog.id)
+        .then(response => {
+          setBlogs(blogs.filter(blog => blog.id !== removedId))
+
+          /* Inform user of successful operation */
+          setNotificationType('success')
+          setNotificationMessage(`blog ${removedTitle} removed`)
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000)
+        })
+
+        /* Inform user of error */
+        .catch(error => {
+          setNotificationType('error')
+          if (error.response.status === 401) {
+            setNotificationMessage(`deleting blog failed: not authorized to remove blog ${removedTitle}`)
+          } else {
+            setNotificationMessage(`deleting blog failed: ${error.response.status} ${error}`)
+          }
+
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000)
+        })
+    }
+  }
+
   const handleLike = (event) => {
     event.preventDefault()
 
@@ -90,6 +125,10 @@ const Blog = ({ blog, setNotificationMessage, setNotificationType, setBlogs, blo
 
           { /* Render user who posted the blog */}
           {userInfo()}
+          <BasicButton
+            event={handleDelete}
+            text={'remove'}
+          />
         </>
       )}
     </div>
