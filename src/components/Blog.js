@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import blogService from '../services/blogs'
 import BlogDeleter from './BlogDeleter'
+import BlogLiker from './BlogLiker'
 
 const Blog = ({
   blog,
@@ -12,13 +12,14 @@ const Blog = ({
 }) => {
 
   const [visible, setVisible] = useState(false)
-  
+
   const toggleVisibility = () => {
     setVisible(!visible)
   }
 
   const title = () => (
     <div className='blogTitle'>
+      {console.log(`DEBUG IN BLOG: RENDERING TITLE: ${blog.title} AND AUTHOR: ${blog.author}`)}
       {blog.title}{', '}{blog.author}
       {' '}
       <button onClick={toggleVisibility}>{visible ? 'hide' : 'show'}</button>
@@ -26,54 +27,17 @@ const Blog = ({
   );
 
   const url = () => (
-    <div className='blogUrl'><a href={blog.url}>{blog.url}</a><br /></div>
-  );
-
-  const likes = () => (
-    <div>
-      likes: {blog.likes}{' '}
-      <button onClick={handleLike}>like</button>
-    </div>
+    <div className='blogUrl'>
+      {console.log(`DEBUG IN BLOG: RENDERING URL: ${blog.url}`)}
+      <a href={blog.url}>{blog.url}</a><br /></div>
   );
 
   const userInfo = () => (
-    <div>{'\u{1F464}'}{blog.user.name} <br /></div>
+    /* Renders emoji and user name */
+    <div>
+      {console.log(`DEBUG IN BLOG: RENDERING USERNAME: ${blog.user.name}`)}
+      {'\u{1F464}'}{blog.user.name} <br /></div>
   )
-
-  const handleLike = (event) => {
-    event.preventDefault()
-
-    const updatedBlog = {
-      title: blog.title,
-      author: blog.author,
-      url: blog.url,
-      likes: blog.likes + 1,
-      user: blog.user.id
-    }
-
-    blogService
-      .update(blog.id, updatedBlog)
-      .then(updatedBlog => {
-        const updatedBlogs = blogs.map(b => b.id === blog.id ? updatedBlog : b)
-        setBlogs(updatedBlogs.sort((blogA, blogB) => blogB.likes - blogA.likes))
-
-        /* Inform user of successful operation */
-        setNotificationType('success')
-        setNotificationMessage(`liked blog: ${blog.title}, ${blog.author}`)
-        setTimeout(() => {
-          setNotificationMessage(null)
-        }, 5000)
-      })
-
-      /* Inform user of error */
-      .catch(error => {
-        setNotificationType('error')
-        setNotificationMessage(`updating blog likes failed: ${error}`)
-        setTimeout(() => {
-          setNotificationMessage(null)
-        }, 5000)
-      })
-  }
 
   return (
     <div className='blog'>
@@ -88,19 +52,25 @@ const Blog = ({
           {url()}
 
           { /* Render blog likes */}
-          {likes()}
+          <BlogLiker
+            blog={blog}
+            setNotificationMessage={setNotificationMessage}
+            setNotificationType={setNotificationType}
+            blogs={blogs}
+            setBlogs={setBlogs}
+          />
 
           { /* Render user who posted the blog */}
           {userInfo()}
 
           { /* Render the delete button (conditionally) */}
           <BlogDeleter
-              user={user}
-              blog={blog}
-              blogs={blogs}
-              setNotificationType={setNotificationType}
-              setNotificationMessage={setNotificationMessage}
-              setBlogs={setBlogs}
+            user={user}
+            blog={blog}
+            blogs={blogs}
+            setNotificationType={setNotificationType}
+            setNotificationMessage={setNotificationMessage}
+            setBlogs={setBlogs}
           />
         </>
       )}
