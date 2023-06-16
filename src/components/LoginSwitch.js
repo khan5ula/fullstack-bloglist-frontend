@@ -6,12 +6,12 @@ import BlogCreator from './BlogCreator'
 import Togglable from './Togglable'
 import Blog from './Blog'
 
-/*  
+/*
     This component acts as a mediator between App,
     BlogCreator and LoginForm.
-    
-    The purpose of component is to check 
-    whether the user is logged in and then render 
+
+    The purpose of component is to check
+    whether the user is logged in and then render
     the proper output.
 */
 
@@ -28,7 +28,7 @@ const LoginSwitch = ({
   setPassword,
   handleLogin
 }) => {
-  
+
   const blogCreatorRef = useRef()
 
   if (user === null) {

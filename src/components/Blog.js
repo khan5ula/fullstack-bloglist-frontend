@@ -24,12 +24,12 @@ const Blog = ({
       {' '}
       <button onClick={toggleVisibility}>{visible ? 'hide' : 'show'}</button>
     </div>
-  );
+  )
 
   const url = () => (
     <div className='blogUrl'>
       <a href={blog.url}>{blog.url}</a><br /></div>
-  );
+  )
 
   const userInfo = () => (
     /* Renders emoji and user name */

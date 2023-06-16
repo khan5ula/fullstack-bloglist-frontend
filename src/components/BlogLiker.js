@@ -13,7 +13,7 @@ const BlogLiker = ({
       likes: {blog.likes}{' '}
       <button onClick={handleLike}>like</button>
     </div>
-  );
+  )
 
   const handleLike = (event) => {
     event.preventDefault()

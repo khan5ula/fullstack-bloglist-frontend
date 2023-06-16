@@ -9,7 +9,7 @@ const BlogCreator = ({
   setNotificationType,
   user
 }) => {
-  
+
   const [blog, setBlog] = useState({
     title: '',
     author: '',
@@ -55,7 +55,7 @@ const BlogCreator = ({
 
       /* Inform user of error */
       .catch(error => {
-        console.error(`Error occured while adding the blog: ${error}`);
+        console.error(`Error occured while adding the blog: ${error}`)
         setNotificationType('error')
         setNotificationMessage('new blog could not be added')
         setTimeout(() => {

@@ -80,17 +80,17 @@ const App = () => {
     <div>
       <Notification type={notificationType} message={notificationMessage} />
       <LoginSwitch
-          user={user}
-          blogs={blogs}
-          setBlogs={setBlogs}
-          handleLogout={handleLogout}
-          setNotificationMessage={setNotificationMessage}
-          setNotificationType={setNotificationType}
-          username={username}
-          password={password}
-          setUsername={setUsername}
-          setPassword={setPassword}
-          handleLogin={handleLogin}
+        user={user}
+        blogs={blogs}
+        setBlogs={setBlogs}
+        handleLogout={handleLogout}
+        setNotificationMessage={setNotificationMessage}
+        setNotificationType={setNotificationType}
+        username={username}
+        password={password}
+        setUsername={setUsername}
+        setPassword={setPassword}
+        handleLogin={handleLogin}
       />
 
     </div>

@@ -18,7 +18,7 @@ const BlogDeleter = ({
         <button onClick={handleDelete}>remove</button>
       )
     }
-    return null;
+    return null
   }
 
   const handleDelete = (event) => {
@@ -29,7 +29,7 @@ const BlogDeleter = ({
     if (window.confirm(`Are you sure you want to remove blog ${removedTitle}?`)) {
       blogService
         .remove(blog.id)
-        .then(response => {
+        .then(() => {
           setBlogs(blogs.filter(blog => blog.id !== removedId))
 
           /* Inform user of successful operation */
