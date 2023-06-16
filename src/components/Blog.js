@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import BlogDeleter from './BlogDeleter'
 import BlogLiker from './BlogLiker'
+import PropTypes from 'prop-types'
 
 const Blog = ({
   blog,
@@ -19,7 +20,6 @@ const Blog = ({
 
   const title = () => (
     <div className='blogTitle'>
-      {console.log(`DEBUG IN BLOG: RENDERING TITLE: ${blog.title} AND AUTHOR: ${blog.author}`)}
       {blog.title}{', '}{blog.author}
       {' '}
       <button onClick={toggleVisibility}>{visible ? 'hide' : 'show'}</button>
@@ -28,15 +28,13 @@ const Blog = ({
 
   const url = () => (
     <div className='blogUrl'>
-      {console.log(`DEBUG IN BLOG: RENDERING URL: ${blog.url}`)}
       <a href={blog.url}>{blog.url}</a><br /></div>
   );
 
   const userInfo = () => (
     /* Renders emoji and user name */
     <div>
-      {console.log(`DEBUG IN BLOG: RENDERING USERNAME: ${blog.user.name}`)}
-      {'\u{1F464}'}{blog.user.name} <br /></div>
+      {'\u{1F464}'}{' '}{blog.user.name} <br /></div>
   )
 
   return (
@@ -76,6 +74,15 @@ const Blog = ({
       )}
     </div>
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  setNotificationMessage: PropTypes.func.isRequired,
+  setNotificationType: PropTypes.func.isRequired,
+  setBlogs: PropTypes.func.isRequired,
+  blogs: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 export default Blog

@@ -49,7 +49,7 @@ const App = () => {
         setNotificationMessage(null)
       }, 5000)
 
-      console.log(`asdfasdfasdf${user.name} logged in`)
+      console.log(`${user.name} logged in`)
       setUsername('')
       setPassword('')
 

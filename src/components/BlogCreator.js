@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
+import PropTypes from 'prop-types'
 
 const BlogCreator = ({
   blogs,
@@ -34,13 +35,13 @@ const BlogCreator = ({
       title: blog.title,
       author: blog.author,
       url: blog.url,
-      user: user.name
+      user: user
     }
 
     blogService
       .create(newBlog)
       .then(returnedBlog => {
-        returnedBlog.user = { name: user.name, id: returnedBlog.user }
+        returnedBlog.user = { name: user.name, username: user.username, id: returnedBlog.user }
         setBlogs(blogs.concat(returnedBlog))
         setBlog({ title: '', author: '', url: '' })
 
@@ -97,6 +98,14 @@ const BlogCreator = ({
       <br />
     </div>
   )
+}
+
+BlogCreator.propTypes = {
+  blogs: PropTypes.array.isRequired,
+  setBlogs: PropTypes.func.isRequired,
+  setNotificationMessage: PropTypes.func.isRequired,
+  setNotificationType: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 export default BlogCreator

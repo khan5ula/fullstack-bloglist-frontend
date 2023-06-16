@@ -1,4 +1,5 @@
 import blogService from '../services/blogs'
+import PropTypes from 'prop-types'
 
 const BlogDeleter = ({
   user,
@@ -12,6 +13,7 @@ const BlogDeleter = ({
   const deleteButton = () => {
     /* Usernames must be unique, so comparison between usernames works */
     if (blog.user.username === user.username) {
+
       return (
         <button onClick={handleDelete}>remove</button>
       )
@@ -57,6 +59,15 @@ const BlogDeleter = ({
   return (
     deleteButton()
   )
+}
+
+BlogDeleter.propTypes = {
+  user: PropTypes.object.isRequired,
+  blog: PropTypes.object.isRequired,
+  blogs: PropTypes.array.isRequired,
+  setNotificationType: PropTypes.func.isRequired,
+  setNotificationMessage: PropTypes.func.isRequired,
+  setBlogs: PropTypes.func.isRequired
 }
 
 export default BlogDeleter

@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import PropTypes from 'prop-types'
 
 import LoginForm from './LoginForm'
 import BlogCreator from './BlogCreator'
@@ -81,6 +82,15 @@ const LoginSwitch = ({
       )}
     </div>
   )
+}
+
+LoginSwitch.propTypes = {
+  handleLogout: PropTypes.func.isRequired,
+  setNotificationMessage: PropTypes.func.isRequired,
+  setNotificationType: PropTypes.func.isRequired,
+  setUsername: PropTypes.func.isRequired,
+  setPassword: PropTypes.func.isRequired,
+  handleLogin: PropTypes.func.isRequired
 }
 
 export default LoginSwitch
