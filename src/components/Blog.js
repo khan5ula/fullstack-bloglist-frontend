@@ -1,10 +1,18 @@
 import React, { useState } from 'react'
-import BasicButton from './BasicButton'
 import blogService from '../services/blogs'
+import BlogDeleter from './BlogDeleter'
 
-const Blog = ({ blog, setNotificationMessage, setNotificationType, setBlogs, blogs }) => {
+const Blog = ({
+  blog,
+  setNotificationMessage,
+  setNotificationType,
+  setBlogs,
+  blogs,
+  user
+}) => {
+
   const [visible, setVisible] = useState(false)
-
+  
   const toggleVisibility = () => {
     setVisible(!visible)
   }
@@ -13,10 +21,7 @@ const Blog = ({ blog, setNotificationMessage, setNotificationType, setBlogs, blo
     <div className='blogTitle'>
       {blog.title}{', '}{blog.author}
       {' '}
-      <BasicButton
-        event={toggleVisibility}
-        text={visible ? 'hide' : 'show'}
-      />
+      <button onClick={toggleVisibility}>{visible ? 'hide' : 'show'}</button>
     </div>
   );
 
@@ -27,51 +32,13 @@ const Blog = ({ blog, setNotificationMessage, setNotificationType, setBlogs, blo
   const likes = () => (
     <div>
       likes: {blog.likes}{' '}
-      <BasicButton
-        event={handleLike}
-        text={'like'}
-      />
+      <button onClick={handleLike}>like</button>
     </div>
   );
 
   const userInfo = () => (
     <div>{'\u{1F464}'}{blog.user.name} <br /></div>
   )
-
-  const handleDelete = (event) => {
-    const removedId = blog.id
-    const removedTitle = blog.title
-    event.preventDefault()
-
-    if (window.confirm(`Are you sure you want to remove blog ${removedTitle}?`)) {
-      blogService
-        .remove(blog.id)
-        .then(response => {
-          setBlogs(blogs.filter(blog => blog.id !== removedId))
-
-          /* Inform user of successful operation */
-          setNotificationType('success')
-          setNotificationMessage(`blog ${removedTitle} removed`)
-          setTimeout(() => {
-            setNotificationMessage(null)
-          }, 5000)
-        })
-
-        /* Inform user of error */
-        .catch(error => {
-          setNotificationType('error')
-          if (error.response.status === 401) {
-            setNotificationMessage(`deleting blog failed: not authorized to remove blog ${removedTitle}`)
-          } else {
-            setNotificationMessage(`deleting blog failed: ${error.response.status} ${error}`)
-          }
-
-          setTimeout(() => {
-            setNotificationMessage(null)
-          }, 5000)
-        })
-    }
-  }
 
   const handleLike = (event) => {
     event.preventDefault()
@@ -125,9 +92,15 @@ const Blog = ({ blog, setNotificationMessage, setNotificationType, setBlogs, blo
 
           { /* Render user who posted the blog */}
           {userInfo()}
-          <BasicButton
-            event={handleDelete}
-            text={'remove'}
+
+          { /* Render the delete button (conditionally) */}
+          <BlogDeleter
+              user={user}
+              blog={blog}
+              blogs={blogs}
+              setNotificationType={setNotificationType}
+              setNotificationMessage={setNotificationMessage}
+              setBlogs={setBlogs}
           />
         </>
       )}

@@ -1,7 +1,6 @@
 import { useRef } from 'react'
 
 import LoginForm from './LoginForm'
-import BasicButton from './BasicButton'
 import BlogCreator from './BlogCreator'
 import Togglable from './Togglable'
 import Blog from './Blog'
@@ -15,14 +14,33 @@ import Blog from './Blog'
     the proper output.
 */
 
-const LoginSwitch = ({ props }) => {
+const LoginSwitch = ({
+  user,
+  blogs,
+  setBlogs,
+  handleLogout,
+  setNotificationMessage,
+  setNotificationType,
+  username,
+  password,
+  setUsername,
+  setPassword,
+  handleLogin
+}) => {
+  
   const blogCreatorRef = useRef()
 
-  if (props.user === null) {
+  if (user === null) {
     return (
       <div>
         <h2>Log in to application</h2>
-        <LoginForm props={props} />
+        <LoginForm
+          username={username}
+          setUsername={setUsername}
+          password={password}
+          setPassword={setPassword}
+          handleLogin={handleLogin}
+        />
       </div>
     )
   }
@@ -31,33 +49,34 @@ const LoginSwitch = ({ props }) => {
     <div>
       <h2>blogs</h2>
       <p>
-        {props.user.name} logged in
+        {user.name} logged in
         {' '}
-        <BasicButton event={props.handleLogout} text={'logout'} />
+        <button onClick={handleLogout}>logout</button>
         <br />
       </p>
 
       {/* Toggle visible functionality for blog adding */}
       <Togglable buttonLabel="create new blog" ref={blogCreatorRef}>
         <BlogCreator
-          setBlogs={props.setBlogs}
-          blogs={props.blogs}
-          setNotificationMessage={props.setNotificationMessage}
-          setNotificationType={props.setNotificationType}
-          user={props.user}
+          setBlogs={setBlogs}
+          blogs={blogs}
+          setNotificationMessage={setNotificationMessage}
+          setNotificationType={setNotificationType}
+          user={user}
         />
       </Togglable>
       <br />
 
       {/* Print blogs from the database */}
-      {props.blogs.map(blog =>
+      {blogs.map(blog =>
         <Blog
           key={blog.id}
           blog={blog}
-          setNotificationMessage={props.setNotificationMessage}
-          setNotificationType={props.setNotificationType}
-          setBlogs={props.setBlogs}
-          blogs={props.blogs}
+          setNotificationMessage={setNotificationMessage}
+          setNotificationType={setNotificationType}
+          setBlogs={setBlogs}
+          blogs={blogs}
+          user={user}
         />
       )}
     </div>
