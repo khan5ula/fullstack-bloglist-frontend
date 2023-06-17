@@ -78,11 +78,6 @@ const Blog = ({
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  setNotificationMessage: PropTypes.func.isRequired,
-  setNotificationType: PropTypes.func.isRequired,
-  setBlogs: PropTypes.func.isRequired,
-  blogs: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired
 }
 
 export default Blog

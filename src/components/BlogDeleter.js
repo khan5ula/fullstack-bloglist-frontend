@@ -62,12 +62,7 @@ const BlogDeleter = ({
 }
 
 BlogDeleter.propTypes = {
-  user: PropTypes.object.isRequired,
   blog: PropTypes.object.isRequired,
-  blogs: PropTypes.array.isRequired,
-  setNotificationType: PropTypes.func.isRequired,
-  setNotificationMessage: PropTypes.func.isRequired,
-  setBlogs: PropTypes.func.isRequired
 }
 
 export default BlogDeleter
