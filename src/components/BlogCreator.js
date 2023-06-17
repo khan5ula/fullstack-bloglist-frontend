@@ -71,6 +71,7 @@ const BlogCreator = ({
         id='title'
         value={blog.title}
         onChange={handleTitleChange}
+        placeholder='blog title'
       />
       <br />
       <label className="formLabel" htmlFor="title">author:</label>
@@ -78,6 +79,7 @@ const BlogCreator = ({
         id='author'
         value={blog.author}
         onChange={handleAuthorChange}
+        placeholder='blog author'
       />
       <br />
       <label className="formLabel" htmlFor="title">url:</label>
@@ -85,6 +87,7 @@ const BlogCreator = ({
         id='url'
         value={blog.url}
         onChange={handleUrlChange}
+        placeholder='blog url'
       />
       <br /><br />
       <button type="submit">create</button>
