@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import BlogDeleter from './BlogDeleter'
-import BlogLiker from './BlogLiker'
 import PropTypes from 'prop-types'
 
 const Blog = ({
@@ -9,7 +8,8 @@ const Blog = ({
   setNotificationType,
   setBlogs,
   blogs,
-  user
+  user,
+  handleLike
 }) => {
 
   const [visible, setVisible] = useState(false)
@@ -37,6 +37,13 @@ const Blog = ({
       {'\u{1F464}'}{' '}{blog.user.name} <br /></div>
   )
 
+  const likes = () => (
+    <div>
+      likes: {blog.likes}{' '}
+      <button onClick={() => handleLike(blog)}>like</button>
+    </div>
+  )
+
   return (
     <div className='blog'>
 
@@ -50,13 +57,7 @@ const Blog = ({
           {url()}
 
           { /* Render blog likes */}
-          <BlogLiker
-            blog={blog}
-            setNotificationMessage={setNotificationMessage}
-            setNotificationType={setNotificationType}
-            blogs={blogs}
-            setBlogs={setBlogs}
-          />
+          {likes()}
 
           { /* Render user who posted the blog */}
           {userInfo()}

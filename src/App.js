@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Notification from './components/Notification'
-import LoginSwitch from './components/LoginSwitch'
+import LoginForm from './components/LoginForm'
+import BlogCreator from './components/BlogCreator'
+import Togglable from './components/Togglable'
+import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -76,23 +79,87 @@ const App = () => {
     }, 5000)
   }
 
+  const handleLike = (blog) => {
+    const updatedBlog = { ...blog, likes: blog.likes + 1 }
+
+    blogService
+      .update(blog.id, updatedBlog)
+      .then(updatedBlog => {
+        const updatedBlogs = blogs.map(b => b.id === blog.id ? updatedBlog : b)
+        setBlogs(updatedBlogs.sort((blogA, blogB) => blogB.likes - blogA.likes))
+
+        /* Inform user of successful operation */
+        setNotificationType('success')
+        setNotificationMessage(`liked blog: ${blog.title}, ${blog.author}`)
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
+      })
+
+      /* Inform user of error */
+      .catch(error => {
+        setNotificationType('error')
+        setNotificationMessage(`updating blog likes failed: ${error}`)
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
+      })
+  }
+
+  const blogCreatorRef = useRef()
+
+  if (user === null) {
+    return (
+      <div>
+        <Notification type={notificationType} message={notificationMessage} />
+        <h2>Log in to application</h2>
+        <LoginForm
+          username={username}
+          setUsername={setUsername}
+          password={password}
+          setPassword={setPassword}
+          handleLogin={handleLogin}
+        />
+      </div>
+    )
+  }
+
   return (
     <div>
       <Notification type={notificationType} message={notificationMessage} />
-      <LoginSwitch
-        user={user}
-        blogs={blogs}
-        setBlogs={setBlogs}
-        handleLogout={handleLogout}
-        setNotificationMessage={setNotificationMessage}
-        setNotificationType={setNotificationType}
-        username={username}
-        password={password}
-        setUsername={setUsername}
-        setPassword={setPassword}
-        handleLogin={handleLogin}
-      />
+      <h2>blogs</h2>
+      <p>
+        {user.name} logged in
+        {' '}
+        <button onClick={handleLogout}>logout</button>
+        <br />
+      </p>
 
+      {/* Toggle visible functionality for blog adding */}
+      <Togglable buttonLabel="create new blog" ref={blogCreatorRef}>
+        <BlogCreator
+          setBlogs={setBlogs}
+          blogs={blogs}
+          setNotificationMessage={setNotificationMessage}
+          setNotificationType={setNotificationType}
+          user={user}
+        />
+      </Togglable>
+      <br />
+
+      {/* Print blogs from the database */}
+      {blogs.map(blog =>
+        <Blog
+          key={blog.id}
+          blog={blog}
+          handleLike={handleLike}
+          setNotificationMessage={setNotificationMessage}
+          setNotificationType={setNotificationType}
+          setBlogs={setBlogs}
+          blogs={blogs}
+          user={user}
+        />
+      )}
     </div>
   )
 }
