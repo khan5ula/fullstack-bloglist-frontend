@@ -20,7 +20,6 @@ test('renders content', () => {
 })
 
 test('additional contents show after a click', async () => {
-
   const blog = {
     title: 'react tests',
     author: 'Mr. Testerson',
@@ -31,16 +30,46 @@ test('additional contents show after a click', async () => {
       username: 'dummy'
     }
   }
+
   const container = render(<Blog blog={blog} user={'someuser'} />).container
 
   const user = userEvent.setup()
   const button = screen.getByText('show')
 
   await user.click(button)
-  screen.debug()
 
   const div = container.querySelector('.blog')
   expect(div).toHaveTextContent('www.testings.com')
   expect(div).toHaveTextContent('likes')
   expect(div).toHaveTextContent('Dummy')
+})
+
+test('clicking like twice calls the eventHandler twice', async () => {
+  const blog = {
+    title: 'Like testing blog',
+    author: 'Mr. Testerson',
+    url: 'www.testings.com',
+    likes: '5',
+    user: {
+      name: 'Dummy',
+      username: 'dummy'
+    }
+  }
+
+  const handleLike = jest.fn()
+  const container = render(<Blog blog={blog} user={'someuser'} handleLike={handleLike}/>).container
+  const user = userEvent.setup()
+  const showButton = screen.getByText('show')
+
+  await user.click(showButton)
+
+  const div = container.querySelector('.blog')
+  expect(div).toHaveTextContent('likes')
+
+  const likeButton = screen.getByText('like')
+
+  await user.click(likeButton)
+  await user.click(likeButton)
+
+  expect(handleLike.mock.calls).toHaveLength(2)
 })
