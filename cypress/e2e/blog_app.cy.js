@@ -86,50 +86,74 @@ describe('Blog app', function () {
       cy.contains('blog title created by cypress, cypressio')
     })
 
-    describe('when a blog post is created', function () {
-      it('a blog can be liked,', function () {
-        cy.contains('create new blog').click()
+    it('a blog can be liked,', function () {
+      cy.contains('create new blog').click()
 
-        /* Type the blog info */
-        cy.get('#title').type('blog title created by cypress')
-        cy.get('#author').type('cypressio')
-        cy.get('#url').type('https://docs.cypress.io')
+      /* Type the blog info */
+      cy.get('#title').type('blog title created by cypress')
+      cy.get('#author').type('cypressio')
+      cy.get('#url').type('https://docs.cypress.io')
 
-        /* Confirm blog creation */
-        cy.get('#create-blog-button').click()
+      /* Confirm blog creation */
+      cy.get('#create-blog-button').click()
 
-        /* Show button should be visible, click it! */
-        cy.contains('show').click()
+      /* Show button should be visible, click it! */
+      cy.contains('show').click()
 
-        /* Like button should be visible, click it! */
-        cy.get('#like-button').click()
+      /* Like button should be visible, click it! */
+      cy.get('#like-button').click()
 
-        /* Operation should be successful */
-        cy.contains('liked blog: blog title created by cypress, cypressio')
-        cy.contains('likes: 1')
-      })
-
-      it.only('a blog can be removed', function () {
-        cy.contains('create new blog').click()
-
-        /* Type the blog info */
-        cy.get('#title').type('blog title created by cypress')
-        cy.get('#author').type('cypressio')
-        cy.get('#url').type('https://docs.cypress.io')
-
-        /* Confirm blog creation */
-        cy.get('#create-blog-button').click()
-
-        /* Show button should be visible, click it! */
-        cy.contains('show').click()
-
-        /* Remove button should be visible, click it! */
-        cy.contains('remove').click()
-
-        /* The blog should not be visible anymore */
-        cy.get('html').should('not.contain', 'blog title created by cypress')
-      })
+      /* Operation should be successful */
+      cy.contains('liked blog: blog title created by cypress, cypressio')
+      cy.contains('likes: 1')
     })
 
+    it('a blog can be removed', function () {
+      cy.contains('create new blog').click()
+
+      /* Type the blog info */
+      cy.get('#title').type('blog title created by cypress')
+      cy.get('#author').type('cypressio')
+      cy.get('#url').type('https://docs.cypress.io')
+
+      /* Confirm blog creation */
+      cy.get('#create-blog-button').click()
+
+      /* Show button should be visible, click it! */
+      cy.contains('show').click()
+
+      /* Remove button should be visible, click it! */
+      cy.contains('remove').click()
+
+      /* The blog should not be visible anymore */
+      cy.get('html').should('not.contain', 'blog title created by cypress')
+    })
+
+    it.only('only post owner can see the remove button', function () {
+      cy.contains('create new blog').click()
+
+      /* Type the blog info */
+      cy.get('#title').type('blog title created by cypress')
+      cy.get('#author').type('cypressio')
+      cy.get('#url').type('https://docs.cypress.io')
+
+      /* Confirm blog creation */
+      cy.get('#create-blog-button').click()
+
+      /* Logout */
+      cy.get('#logout-button').click()
+
+      /* Create a new user and login */
+      cy.request('POST', `${Cypress.env('BACKEND')}/users`, { name: 'Second User', username: 'secondUser', password: 'password' })
+      cy.get('#username-form').type('secondUser')
+      cy.get('#password-form').type('password')
+      cy.get('#login-button').click()
+
+      /* Show button should be visible, click it! */
+      cy.contains('show').click()
+
+      /* Remove button should not be visible */
+      cy.get('.blog').should('not.contain', 'remove')
+    })
   })
 })
