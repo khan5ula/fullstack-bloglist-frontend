@@ -173,7 +173,7 @@ describe('Blog app', function () {
       cy.get('#url').type('https://docs.cypress.io')
       cy.get('#create-blog-button').click()
 
-      /* Post the second blog */
+      /* Post the third blog */
       cy.get('#title').type('Third blog, should be sorted as second')
       cy.get('#author').type('cypressio')
       cy.get('#url').type('https://docs.cypress.io')
