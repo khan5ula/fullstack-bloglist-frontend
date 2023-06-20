@@ -129,7 +129,7 @@ describe('Blog app', function () {
       cy.get('html').should('not.contain', 'blog title created by cypress')
     })
 
-    it.only('only post owner can see the remove button', function () {
+    it('only post owner can see the remove button', function () {
       cy.contains('create new blog').click()
 
       /* Type the blog info */
@@ -154,6 +154,79 @@ describe('Blog app', function () {
 
       /* Remove button should not be visible */
       cy.get('.blog').should('not.contain', 'remove')
+    })
+
+    it('blog posts should be sorted by likes', function () {
+      /* This test is ugly but it works */
+
+      cy.contains('create new blog').click()
+
+      /* Post the first blog */
+      cy.get('#title').type('First blog, should be sorted as third')
+      cy.get('#author').type('cypressio')
+      cy.get('#url').type('https://docs.cypress.io')
+      cy.get('#create-blog-button').click()
+
+      /* Post the second blog */
+      cy.get('#title').type('Second blog, should be sorted as third')
+      cy.get('#author').type('cypressio')
+      cy.get('#url').type('https://docs.cypress.io')
+      cy.get('#create-blog-button').click()
+
+      /* Post the second blog */
+      cy.get('#title').type('Third blog, should be sorted as second')
+      cy.get('#author').type('cypressio')
+      cy.get('#url').type('https://docs.cypress.io')
+      cy.get('#create-blog-button').click()
+
+      /* Like the first blog twice */
+      cy.contains('div.blog', 'First blog')
+        .contains('show')
+        .click()
+
+      for (let i = 0; i < 2; i++) {
+        cy.contains('div.blog', 'First blog')
+          .contains('like').click()
+          .then(function () {
+            cy.wait(300)
+          })
+      }
+
+      /* Like the second blog five times */
+      cy.contains('div.blog', 'Second blog')
+        .contains('show')
+        .click()
+
+      for (let i = 0; i < 5; i++) {
+        cy.contains('div.blog', 'Second blog')
+          .contains('like').click()
+          .then(function () {
+            cy.wait(300)
+          })
+      }
+
+      /* Like the third blog four times */
+      cy.contains('div.blog', 'Third blog')
+        .contains('show')
+        .click()
+
+      for (let i = 0; i < 4; i++) {
+        cy.contains('div.blog', 'Third blog')
+          .contains('like').click()
+          .then(function () {
+            cy.wait(300)
+          })
+      }
+
+      /*
+          The order of the blogs should now be:
+          1. Second blog
+          2. Third blog
+          3. First blog
+      */
+      cy.get('.blog').eq(0).should('contain', 'Second blog')
+      cy.get('.blog').eq(1).should('contain', 'Third blog')
+      cy.get('.blog').eq(2).should('contain', 'First blog')
     })
   })
 })

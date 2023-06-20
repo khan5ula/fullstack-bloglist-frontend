@@ -22,7 +22,7 @@ const Blog = ({
     <div className='blogTitle'>
       {blog.title}{', '}{blog.author}
       {' '}
-      <button onClick={toggleVisibility}>{visible ? 'hide' : 'show'}</button>
+      <button id='show-button' onClick={toggleVisibility}>{visible ? 'hide' : 'show'}</button>
     </div>
   )
 
@@ -45,7 +45,7 @@ const Blog = ({
   )
 
   return (
-    <div className='blog'>
+    <div className={'blog'}>
 
       { /* Render blog title */}
       {title()}
