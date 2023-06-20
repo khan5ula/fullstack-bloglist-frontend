@@ -136,7 +136,7 @@ const App = () => {
       </p>
 
       {/* Toggle visible functionality for blog adding */}
-      <Togglable buttonLabel="create new blog" ref={blogCreatorRef}>
+      <Togglable buttonLabel="create new blog" ref={blogCreatorRef} id="create-new-blog-button">
         <BlogCreator
           setBlogs={setBlogs}
           blogs={blogs}

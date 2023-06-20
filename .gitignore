@@ -22,5 +22,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+.eslintignore
+.eslintrc.js
 
+# cypress
 cypress/videos
+cypress/screenshots/

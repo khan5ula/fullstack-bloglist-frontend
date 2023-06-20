@@ -30,8 +30,8 @@ describe('Blog app', function () {
     it('succeeds with correct credentials', function () {
 
       /* Submit correct user info */
-      cy.get('#username-form').type('johndoe')
-      cy.get('#password-form').type('salasana')
+      cy.get('#username-form').type('johndoe', { force: true })
+      cy.get('#password-form').type('salasana', { force: true })
       cy.get('#login-button').click()
 
       /* Expect success */
@@ -41,8 +41,8 @@ describe('Blog app', function () {
     it('fails with wrong credentials', function () {
 
       /* Submit invalid username */
-      cy.get('#username-form').type('janedoe')
-      cy.get('#password-form').type('salasana')
+      cy.get('#username-form').type('janedoe', { force: true })
+      cy.get('#password-form').type('salasana', { force: true })
       cy.get('#login-button').click()
 
       /* Expect failure */
@@ -57,6 +57,33 @@ describe('Blog app', function () {
 
       /* Expect failure */
       cy.contains('wrong username or password')
+    })
+  })
+
+  describe('when logged in', function () {
+    beforeEach(function () {
+      /* Login 'manually' since cy command does not seem to work */
+      cy.get('#username-form').type('johndoe')
+      cy.get('#password-form').type('salasana')
+      cy.get('#login-button').click()
+    })
+
+    it.only('a blog can be created', function () {
+      cy.contains('create new blog').click()
+
+      /* Type the blog info */
+      cy.get('#title').type('blog title created by cypress')
+      cy.get('#author').type('cypressio')
+      cy.get('#url').type('https://docs.cypress.io')
+
+      /* Confirm blog creation */
+      cy.get('#create-blog-button').click()
+
+      /* Success message should be visible */
+      cy.contains('a new blog blog title created by cypress added')
+
+      /* The new blog should now be visible */
+      cy.contains('blog title created by cypress, cypressio')
     })
   })
 })

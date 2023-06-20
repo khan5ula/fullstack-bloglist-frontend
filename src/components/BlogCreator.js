@@ -90,7 +90,7 @@ const BlogCreator = ({
         placeholder='blog url'
       />
       <br /><br />
-      <button type="submit">create</button>
+      <button id="create-blog-button" type="submit">create</button>
     </form>
   )
 
