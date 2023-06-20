@@ -86,26 +86,50 @@ describe('Blog app', function () {
       cy.contains('blog title created by cypress, cypressio')
     })
 
-    it.only('a blog can be liked,', function () {
-      cy.contains('create new blog').click()
+    describe('when a blog post is created', function () {
+      it('a blog can be liked,', function () {
+        cy.contains('create new blog').click()
 
-      /* Type the blog info */
-      cy.get('#title').type('blog title created by cypress')
-      cy.get('#author').type('cypressio')
-      cy.get('#url').type('https://docs.cypress.io')
+        /* Type the blog info */
+        cy.get('#title').type('blog title created by cypress')
+        cy.get('#author').type('cypressio')
+        cy.get('#url').type('https://docs.cypress.io')
 
-      /* Confirm blog creation */
-      cy.get('#create-blog-button').click()
+        /* Confirm blog creation */
+        cy.get('#create-blog-button').click()
 
-      /* Show button should be visible, click it! */
-      cy.contains('show').click()
+        /* Show button should be visible, click it! */
+        cy.contains('show').click()
 
-      /* Like button should be visible, click it! */
-      cy.get('#like-button').click()
+        /* Like button should be visible, click it! */
+        cy.get('#like-button').click()
 
-      /* Operation should be successful */
-      cy.contains('liked blog: blog title created by cypress, cypressio')
-      cy.contains('likes: 1')
+        /* Operation should be successful */
+        cy.contains('liked blog: blog title created by cypress, cypressio')
+        cy.contains('likes: 1')
+      })
+
+      it.only('a blog can be removed', function () {
+        cy.contains('create new blog').click()
+
+        /* Type the blog info */
+        cy.get('#title').type('blog title created by cypress')
+        cy.get('#author').type('cypressio')
+        cy.get('#url').type('https://docs.cypress.io')
+
+        /* Confirm blog creation */
+        cy.get('#create-blog-button').click()
+
+        /* Show button should be visible, click it! */
+        cy.contains('show').click()
+
+        /* Remove button should be visible, click it! */
+        cy.contains('remove').click()
+
+        /* The blog should not be visible anymore */
+        cy.get('html').should('not.contain', 'blog title created by cypress')
+      })
     })
+
   })
 })
