@@ -40,7 +40,7 @@ const Blog = ({
   const likes = () => (
     <div>
       likes: {blog.likes}{' '}
-      <button onClick={() => handleLike(blog)}>like</button>
+      <button id='like-button' onClick={() => handleLike(blog)}>like</button>
     </div>
   )
 

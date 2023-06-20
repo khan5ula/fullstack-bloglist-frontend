@@ -68,7 +68,7 @@ describe('Blog app', function () {
       cy.get('#login-button').click()
     })
 
-    it.only('a blog can be created', function () {
+    it('a blog can be created', function () {
       cy.contains('create new blog').click()
 
       /* Type the blog info */
@@ -84,6 +84,28 @@ describe('Blog app', function () {
 
       /* The new blog should now be visible */
       cy.contains('blog title created by cypress, cypressio')
+    })
+
+    it.only('a blog can be liked,', function () {
+      cy.contains('create new blog').click()
+
+      /* Type the blog info */
+      cy.get('#title').type('blog title created by cypress')
+      cy.get('#author').type('cypressio')
+      cy.get('#url').type('https://docs.cypress.io')
+
+      /* Confirm blog creation */
+      cy.get('#create-blog-button').click()
+
+      /* Show button should be visible, click it! */
+      cy.contains('show').click()
+
+      /* Like button should be visible, click it! */
+      cy.get('#like-button').click()
+
+      /* Operation should be successful */
+      cy.contains('liked blog: blog title created by cypress, cypressio')
+      cy.contains('likes: 1')
     })
   })
 })
