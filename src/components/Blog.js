@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { deleteBlog, likeBlog } from '../reducers/blogReducer'
-import { setNotification } from '../reducers/notificationReducer'
 
-const Blog = ({ blog, user }) => {
+const Blog = ({ blog }) => {
   const [visible, setVisible] = useState(false)
+  const user = useSelector((state) => state.user)
 
   const dispatch = useDispatch()
 
@@ -15,7 +15,6 @@ const Blog = ({ blog, user }) => {
 
   const handleLike = (blog) => {
     dispatch(likeBlog(blog.id))
-    dispatch(setNotification(`liked blog: ${blog.title}, ${blog.author}`, 5000))
   }
 
   const title = () => (

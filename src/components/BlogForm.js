@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
-import { setNotification } from '../reducers/notificationReducer'
 
-const BlogCreator = ({ user }) => {
+const BlogForm = () => {
   const dispatch = useDispatch()
+  const user = useSelector((state) => state.user)
 
   const [blog, setBlog] = useState({
     title: '',
@@ -36,7 +35,6 @@ const BlogCreator = ({ user }) => {
     }
 
     dispatch(createBlog(blog))
-    dispatch(setNotification(`a new blog ${blog.title} added`, 5000))
     setBlog({ title: '', author: '', url: '' })
   }
 
@@ -88,8 +86,4 @@ const BlogCreator = ({ user }) => {
   )
 }
 
-BlogCreator.propTypes = {
-  user: PropTypes.object.isRequired,
-}
-
-export default BlogCreator
+export default BlogForm
