@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import BlogDeleter from './BlogDeleter'
-import PropTypes from 'prop-types'
+import React, { useState } from "react";
+import BlogDeleter from "./BlogDeleter";
+import PropTypes from "prop-types";
 
 const Blog = ({
   blog,
@@ -9,60 +9,66 @@ const Blog = ({
   setBlogs,
   blogs,
   user,
-  handleLike
+  handleLike,
 }) => {
-
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
 
   const toggleVisibility = () => {
-    setVisible(!visible)
-  }
+    setVisible(!visible);
+  };
 
   const title = () => (
-    <div className='blogTitle'>
-      {blog.title}{', '}{blog.author}
-      {' '}
-      <button id='show-button' onClick={toggleVisibility}>{visible ? 'hide' : 'show'}</button>
+    <div className="blogTitle">
+      {blog.title}
+      {", "}
+      {blog.author}{" "}
+      <button id="show-button" onClick={toggleVisibility}>
+        {visible ? "hide" : "show"}
+      </button>
     </div>
-  )
+  );
 
   const url = () => (
-    <div className='blogUrl'>
-      <a href={blog.url}>{blog.url}</a><br /></div>
-  )
+    <div className="blogUrl">
+      <a href={blog.url}>{blog.url}</a>
+      <br />
+    </div>
+  );
 
   const userInfo = () => (
     /* Renders emoji and user name */
     <div>
-      {'\u{1F464}'}{' '}{blog.user.name} <br /></div>
-  )
+      {"\u{1F464}"} {blog.user.name} <br />
+    </div>
+  );
 
   const likes = () => (
     <div>
-      likes: {blog.likes}{' '}
-      <button id='like-button' onClick={() => handleLike(blog)}>like</button>
+      likes: {blog.likes}{" "}
+      <button id="like-button" onClick={() => handleLike(blog)}>
+        like
+      </button>
     </div>
-  )
+  );
 
   return (
-    <div className={'blog'}>
-
-      { /* Render blog title */}
+    <div className={"blog"}>
+      {/* Render blog title */}
       {title()}
 
-      { /* Show blog details if visibility is toggled */}
+      {/* Show blog details if visibility is toggled */}
       {visible && (
         <>
-          { /* Render blog url */}
+          {/* Render blog url */}
           {url()}
 
-          { /* Render blog likes */}
+          {/* Render blog likes */}
           {likes()}
 
-          { /* Render user who posted the blog */}
+          {/* Render user who posted the blog */}
           {userInfo()}
 
-          { /* Render the delete button (conditionally) */}
+          {/* Render the delete button (conditionally) */}
           <BlogDeleter
             user={user}
             blog={blog}
@@ -74,11 +80,11 @@ const Blog = ({
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-}
+};
 
-export default Blog
+export default Blog;
