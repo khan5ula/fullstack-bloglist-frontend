@@ -1,12 +1,21 @@
-import React, { useState } from 'react'
-import BlogDeleter from './BlogDeleter'
 import PropTypes from 'prop-types'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { deleteBlog, likeBlog } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
-const Blog = ({ blog, user, handleLike }) => {
+const Blog = ({ blog, user }) => {
   const [visible, setVisible] = useState(false)
+
+  const dispatch = useDispatch()
 
   const toggleVisibility = () => {
     setVisible(!visible)
+  }
+
+  const handleLike = (blog) => {
+    dispatch(likeBlog(blog.id))
+    dispatch(setNotification(`liked blog: ${blog.title}, ${blog.author}`, 5000))
   }
 
   const title = () => (
@@ -28,7 +37,6 @@ const Blog = ({ blog, user, handleLike }) => {
   )
 
   const userInfo = () => (
-    /* Renders emoji and user name */
     <div>
       {'\u{1F464}'} {blog.user.name} <br />
     </div>
@@ -43,25 +51,34 @@ const Blog = ({ blog, user, handleLike }) => {
     </div>
   )
 
+  const deleteButton = () => {
+    if (blog.user.username === user.username) {
+      return <button onClick={handleDelete}>remove</button>
+    }
+    return null
+  }
+
+  const handleDelete = (event) => {
+    const removedTitle = blog.title
+    event.preventDefault()
+
+    if (
+      window.confirm(`Are you sure you want to remove blog ${removedTitle}?`)
+    ) {
+      dispatch(deleteBlog(blog.id))
+      dispatch(setNotification(`blog ${removedTitle} removed`, 5000))
+    }
+  }
+
   return (
     <div className={'blog'}>
-      {/* Render blog title */}
       {title()}
-
-      {/* Show blog details if visibility is toggled */}
       {visible && (
         <>
-          {/* Render blog url */}
           {url()}
-
-          {/* Render blog likes */}
           {likes()}
-
-          {/* Render user who posted the blog */}
           {userInfo()}
-
-          {/* Render the delete button (conditionally) */}
-          <BlogDeleter user={user} blog={blog} />
+          {deleteButton()}
         </>
       )}
     </div>

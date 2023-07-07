@@ -9,15 +9,12 @@ const blogSlice = createSlice({
     create: (state, action) => {
       state.push(action.payload)
     },
-    increment: (state, action) => {
-      /*const id = action.payload
-      const anecdoteToVote = state.find((n) => n.id === id)
-      if (anecdoteToVote) {
-        anecdoteToVote.votes++
-      }*/
-      console.log(
-        'liking is not yet implemented, but here is an imaginary like!'
-      )
+    like: (state, action) => {
+      const id = action.payload
+      const blogToLike = state.find((n) => n.id === id)
+      if (blogToLike) {
+        blogToLike.likes++
+      }
     },
     setBlogs: (state, action) => {
       return action.payload
@@ -25,7 +22,7 @@ const blogSlice = createSlice({
   },
 })
 
-export const { create, increment, setBlogs } = blogSlice.actions
+export const { create, like, setBlogs } = blogSlice.actions
 
 export const initializeBlogs = () => {
   return async (dispatch) => {
@@ -49,7 +46,16 @@ export const likeBlog = (id) => {
       blogToVote.likes++
     }
     await blogService.update(id, blogToVote)
-    dispatch(increment(id))
+    dispatch(like(id))
+  }
+}
+
+export const deleteBlog = (id) => {
+  return async (dispatch) => {
+    const blogs = await blogService.getAll()
+    const newBlogs = blogs.filter((blog) => blog.id !== id)
+    await blogService.remove(id)
+    dispatch(setBlogs(newBlogs))
   }
 }
 
