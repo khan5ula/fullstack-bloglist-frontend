@@ -2,15 +2,7 @@ import React, { useState } from 'react'
 import BlogDeleter from './BlogDeleter'
 import PropTypes from 'prop-types'
 
-const Blog = ({
-  blog,
-  setNotificationMessage,
-  setNotificationType,
-  setBlogs,
-  blogs,
-  user,
-  handleLike,
-}) => {
+const Blog = ({ blog, setBlogs, blogs, user, handleLike }) => {
   const [visible, setVisible] = useState(false)
 
   const toggleVisibility = () => {
@@ -73,8 +65,6 @@ const Blog = ({
             user={user}
             blog={blog}
             blogs={blogs}
-            setNotificationType={setNotificationType}
-            setNotificationMessage={setNotificationMessage}
             setBlogs={setBlogs}
           />
         </>
