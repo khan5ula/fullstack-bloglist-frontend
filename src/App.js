@@ -1,29 +1,27 @@
 import { useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import { setNotification } from './reducers/notificationReducer'
+import { initializeBlogs, setBlogs } from './reducers/blogReducer'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
   const dispatch = useDispatch()
-
-  const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
+  const blogs = useSelector((state) => state.blogs)
+
   useEffect(() => {
-    blogService
-      .getAll()
-      .then((blogs) =>
-        setBlogs(blogs.sort((blogA, blogB) => blogB.likes - blogA.likes))
-      )
-  }, [])
+    dispatch(initializeBlogs())
+    dispatch(setBlogs(blogs.sort((blogA, blogB) => blogB.likes - blogA.likes)))
+  }, [dispatch])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogUser')
@@ -132,7 +130,6 @@ const App = () => {
           key={blog.id}
           blog={blog}
           handleLike={handleLike}
-          setBlogs={setBlogs}
           blogs={blogs}
           user={user}
         />

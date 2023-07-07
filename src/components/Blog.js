@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import BlogDeleter from './BlogDeleter'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, setBlogs, blogs, user, handleLike }) => {
+const Blog = ({ blog, user, handleLike }) => {
   const [visible, setVisible] = useState(false)
 
   const toggleVisibility = () => {
@@ -61,12 +61,7 @@ const Blog = ({ blog, setBlogs, blogs, user, handleLike }) => {
           {userInfo()}
 
           {/* Render the delete button (conditionally) */}
-          <BlogDeleter
-            user={user}
-            blog={blog}
-            blogs={blogs}
-            setBlogs={setBlogs}
-          />
+          <BlogDeleter user={user} blog={blog} />
         </>
       )}
     </div>
