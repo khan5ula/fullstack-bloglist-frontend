@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import BlogDeleter from "./BlogDeleter";
-import PropTypes from "prop-types";
+import React, { useState } from 'react'
+import BlogDeleter from './BlogDeleter'
+import PropTypes from 'prop-types'
 
 const Blog = ({
   blog,
@@ -11,48 +11,48 @@ const Blog = ({
   user,
   handleLike,
 }) => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false)
 
   const toggleVisibility = () => {
-    setVisible(!visible);
-  };
+    setVisible(!visible)
+  }
 
   const title = () => (
     <div className="blogTitle">
       {blog.title}
-      {", "}
-      {blog.author}{" "}
+      {', '}
+      {blog.author}{' '}
       <button id="show-button" onClick={toggleVisibility}>
-        {visible ? "hide" : "show"}
+        {visible ? 'hide' : 'show'}
       </button>
     </div>
-  );
+  )
 
   const url = () => (
     <div className="blogUrl">
       <a href={blog.url}>{blog.url}</a>
       <br />
     </div>
-  );
+  )
 
   const userInfo = () => (
     /* Renders emoji and user name */
     <div>
-      {"\u{1F464}"} {blog.user.name} <br />
+      {'\u{1F464}'} {blog.user.name} <br />
     </div>
-  );
+  )
 
   const likes = () => (
     <div>
-      likes: {blog.likes}{" "}
+      likes: {blog.likes}{' '}
       <button id="like-button" onClick={() => handleLike(blog)}>
         like
       </button>
     </div>
-  );
+  )
 
   return (
-    <div className={"blog"}>
+    <div className={'blog'}>
       {/* Render blog title */}
       {title()}
 
@@ -80,11 +80,11 @@ const Blog = ({
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-};
+}
 
-export default Blog;
+export default Blog
