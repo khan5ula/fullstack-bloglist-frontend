@@ -17,7 +17,9 @@ const Users = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <td style={{ paddingRight: '20px' }}>{user.name}</td>
+              <td style={{ paddingRight: '20px' }}>
+                {<Link to={`/users/${user.id}`}>{user.name}</Link>}
+              </td>
               <td>{user.blogs.length}</td>
             </tr>
           ))}
@@ -26,5 +28,6 @@ const Users = () => {
     </div>
   )
 }
+import { Link } from 'react-router-dom'
 
 export default Users

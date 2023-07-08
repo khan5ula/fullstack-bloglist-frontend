@@ -5,7 +5,7 @@ import { deleteBlog, likeBlog } from '../reducers/blogReducer'
 
 const Blog = ({ blog }) => {
   const [visible, setVisible] = useState(false)
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user.currentUser)
 
   const dispatch = useDispatch()
 
@@ -65,7 +65,6 @@ const Blog = ({ blog }) => {
       window.confirm(`Are you sure you want to remove blog ${removedTitle}?`)
     ) {
       dispatch(deleteBlog(blog.id))
-      dispatch(setNotification(`blog ${removedTitle} removed`, 5000))
     }
   }
 

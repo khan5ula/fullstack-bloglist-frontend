@@ -88,6 +88,7 @@ export const deleteBlog = (id) => {
       const newBlogs = blogs.filter((blog) => blog.id !== id)
       await blogService.remove(id)
       dispatch(setBlogs(newBlogs))
+      dispatch(setNotification(`blog removed`, 5000))
     } catch (error) {
       setNotification(
         `error: blog deletion failed: ${error.response.data}`,
