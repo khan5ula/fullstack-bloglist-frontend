@@ -34,8 +34,7 @@ export const initializeBlogs = () => {
     } catch (error) {
       dispatch(
         setNotification(
-          `error: could not retrieve blogs: ${error.response.data}`,
-          5000
+          `error: could not retrieve blogs: ${error.response.data}`
         )
       )
     }
@@ -48,14 +47,14 @@ export const createBlog = (newBlog) => {
       const blog = await blogService.create(newBlog)
       dispatch(create(blog))
       dispatch(setBlogs(await blogService.getAll()))
-      dispatch(setNotification(`a new blog ${newBlog.title} added`, 5000))
+      dispatch(setNotification(`a new blog ${newBlog.title} added`))
     } catch (error) {
       let errorMessage = 'blog could not be added'
       if (error.response && error.response.data) {
         const errorDataStr = JSON.stringify(error.response.data)
         errorMessage += ': minimum lenght of a field is 3 characters'
       }
-      dispatch(setNotification(errorMessage, 5000))
+      dispatch(setNotification(errorMessage))
     }
   }
 }
@@ -74,9 +73,7 @@ export const likeBlog = (id) => {
         setBlogs(blogs.sort((blogA, blogB) => blogB.likes - blogA.likes))
       )
     } catch (error) {
-      dispatch(
-        setNotification(`error: like failed: ${error.response.data}`, 5000)
-      )
+      dispatch(setNotification(`error: like failed: ${error.response.data}`))
     }
   }
 }
@@ -88,11 +85,10 @@ export const deleteBlog = (id) => {
       const newBlogs = blogs.filter((blog) => blog.id !== id)
       await blogService.remove(id)
       dispatch(setBlogs(newBlogs))
-      dispatch(setNotification(`blog removed`, 5000))
+      dispatch(setNotification(`blog removed`))
     } catch (error) {
-      setNotification(
-        `error: blog deletion failed: ${error.response.data}`,
-        5000
+      dispatch(
+        setNotification(`error: blog deletion failed: ${error.response.data}`)
       )
     }
   }

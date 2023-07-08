@@ -12,12 +12,12 @@ const notificationSlice = createSlice({
   },
 })
 
-export const setNotification = (content, delay) => {
+export const setNotification = (content) => {
   return async (dispatch) => {
     dispatch(set(content))
     setTimeout(() => {
       dispatch(set(initialState))
-    }, delay)
+    }, 5000)
   }
 }
 

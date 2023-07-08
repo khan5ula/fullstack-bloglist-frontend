@@ -27,7 +27,9 @@ export const { setCurrentUser, setAllUsers } = userSlice.actions
 export const setUser = (user) => {
   return async (dispatch) => {
     dispatch(setCurrentUser(user))
-    blogService.setToken(user.token)
+    if (user) {
+      blogService.setToken(user.token)
+    }
   }
 }
 
@@ -38,10 +40,7 @@ export const getUsers = () => {
       dispatch(setAllUsers(users))
     } catch (error) {
       dispatch(
-        setNotification(
-          `failed to get all users: ${error.response.data.error}`,
-          5000
-        )
+        setNotification(`failed to get all users: ${error.response.data.error}`)
       )
     }
   }
@@ -54,12 +53,9 @@ export const login = (credentials) => {
       blogService.setToken(user.token)
       dispatch(setCurrentUser(user))
       window.localStorage.setItem('loggedBlogUser', JSON.stringify(user))
-      console.log(`user to local storage: ${JSON.stringify(user)}`)
-      dispatch(setNotification(`${user.username} logged in`, 5000))
+      dispatch(setNotification(`${user.username} logged in`))
     } catch (error) {
-      dispatch(
-        setNotification(`login failed: ${error.response.data.error}`, 5000)
-      )
+      dispatch(setNotification(`login failed: ${error.response.data.error}`))
     }
   }
 }

@@ -10,12 +10,15 @@ import { getUsers, setUser } from './reducers/userReducer'
 
 import { Route, Routes, useMatch } from 'react-router-dom'
 import BlogList from './components/BlogList'
+import Blog from './components/Blog'
 
 const App = () => {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user.currentUser)
-  const match = useMatch('/users/:id')
+  const matchUser = useMatch('/users/:id')
+  const matchBlog = useMatch('/blogs/:id')
   const users = useSelector((state) => state.user.allUsers)
+  const blogs = useSelector((state) => state.blogs)
 
   useEffect(() => {
     dispatch(initializeBlogs())
@@ -35,7 +38,7 @@ const App = () => {
 
   const handleLogout = async () => {
     window.localStorage.removeItem('loggedBlogUser')
-    dispatch(setNotification(`${user.name} logged out`, 5000))
+    dispatch(setNotification(`${user.name} logged out`))
     dispatch(setUser(null))
   }
 
@@ -49,12 +52,17 @@ const App = () => {
     )
   }
 
-  const viewUser = match ? users.find((a) => a.id === match.params.id) : null
+  const viewUser = matchUser
+    ? users.find((a) => a.id === matchUser.params.id)
+    : null
+
+  const viewBlog = matchBlog
+    ? blogs.find((a) => a.id === matchBlog.params.id)
+    : null
 
   return (
     <div>
       <Notification />
-      <h2>blogs</h2>
       <p>
         {'\u{1F464} '}
         {`${user.name} `}
@@ -63,9 +71,12 @@ const App = () => {
         </button>
         <br />
       </p>
+      <h2>blogs</h2>
+
       <Routes>
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<User user={viewUser} />} />
+        <Route path="/blogs/:id" element={<Blog blog={viewBlog} />} />
         <Route path="/" element={<BlogList />} />
       </Routes>
     </div>
