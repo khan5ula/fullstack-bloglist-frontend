@@ -1,13 +1,13 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render, screen } from '@testing-library/react'
-import BlogCreator from './BlogForm'
+import BlogForm from './BlogForm'
 import userEvent from '@testing-library/user-event'
 
 test('blog creator receives correct information', () => {
   const setBlogs = jest.fn()
 
-  render(<BlogCreator setBlogs={setBlogs} />)
+  render(<BlogForm />)
 
   const title = screen.getByPlaceholderText('blog title')
   const author = screen.getByPlaceholderText('blog author')
