@@ -39,9 +39,7 @@ export const getUsers = () => {
       const users = await userService.getAll()
       dispatch(setAllUsers(users))
     } catch (error) {
-      dispatch(
-        setNotification(`failed to get all users: ${error.response.data.error}`)
-      )
+      dispatch(setNotification(`failed to get all users: ${error}`))
     }
   }
 }

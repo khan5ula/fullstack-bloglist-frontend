@@ -6,7 +6,6 @@ import Notification from './components/Notification'
 import User from './components/User'
 import Users from './components/Users'
 import { initializeBlogs } from './reducers/blogReducer'
-import { setNotification } from './reducers/notificationReducer'
 import { getUsers, setUser } from './reducers/userReducer'
 
 import { Route, Routes, useMatch } from 'react-router-dom'
@@ -37,15 +36,9 @@ const App = () => {
     }
   }, [dispatch])
 
-  const handleLogout = async () => {
-    window.localStorage.removeItem('loggedBlogUser')
-    dispatch(setNotification(`${user.name} logged out`))
-    dispatch(setUser(null))
-  }
-
   if (user === null) {
     return (
-      <div>
+      <div className="container" style={{ marginTop: '10px' }}>
         <Notification />
         <h2>Log in to application</h2>
         <LoginForm />
@@ -62,18 +55,9 @@ const App = () => {
     : null
 
   return (
-    <div>
+    <div className="container" style={{ marginTop: '10px' }}>
       <Notification />
-      <Menu />
-      <p>
-        {'\u{1F464} '}
-        {`${user.name} `}
-        <button id="logout-button" onClick={handleLogout}>
-          logout
-        </button>
-        <br />
-      </p>
-      <h2>blogs</h2>
+      <Menu user={user} />
 
       <Routes>
         <Route path="/users" element={<Users />} />

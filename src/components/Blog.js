@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { commentBlog, deleteBlog, likeBlog } from '../reducers/blogReducer'
+import { Button, Form } from 'react-bootstrap'
 
 const Blog = ({ blog }) => {
   const user = useSelector((state) => state.user.currentUser)
@@ -19,37 +20,49 @@ const Blog = ({ blog }) => {
 
   const title = () => (
     <div className="blogTitle">
-      {blog.title}
-      {', '}
-      {blog.author}{' '}
+      <h2>{blog.title}</h2>
+      {`Author: ${blog.author}`}
     </div>
   )
 
   const url = () => (
-    <div className="blogUrl">
-      <a href={blog.url}>{blog.url}</a>
+    <div>
+      Find out more: <a href={blog.url}>{blog.url}</a>
       <br />
     </div>
   )
 
   const userInfo = () => (
     <div>
-      {'\u{1F464}'} {blog.user.name} <br />
+      {'\u{1F464}'} {blog.user.name}
+      <p style={{ marginTop: '10px' }}>{deleteButton()}</p>
+      <hr />
     </div>
   )
 
   const likes = () => (
     <div>
-      likes: {blog.likes}{' '}
-      <button id="like-button" onClick={() => handleLike(blog)}>
-        like
-      </button>
+      Likes: {blog.likes}{' '}
+      <p style={{ marginTop: '5px' }}>
+        <Button
+          variant="success"
+          size="sm"
+          id="like-button"
+          onClick={() => handleLike(blog)}
+        >
+          like
+        </Button>
+      </p>
     </div>
   )
 
   const deleteButton = () => {
     if (blog.user.username === user.username) {
-      return <button onClick={handleDelete}>remove</button>
+      return (
+        <Button variant="danger" size="sm" onClick={handleDelete}>
+          remove
+        </Button>
+      )
     }
     return null
   }
@@ -78,16 +91,23 @@ const Blog = ({ blog }) => {
   const commentForm = () => {
     return (
       <div>
-        <form onSubmit={addComment}>
-          <input
-            type="text"
+        <Form onSubmit={addComment}>
+          <Form.Control
+            placeholder="add..."
+            style={{ marginBottom: '10px', width: '50%' }}
+            as="textarea"
             value={newComment}
             onChange={handleCommentChange}
           />
-          <button id="create-blog-button" type="submit">
+          <Button
+            variant="primary"
+            size="sm"
+            id="create-blog-button"
+            type="submit"
+          >
             add comment
-          </button>
-        </form>
+          </Button>
+        </Form>
       </div>
     )
   }
@@ -99,32 +119,37 @@ const Blog = ({ blog }) => {
     }
     return (
       <div>
-        <h2>comments</h2>
-        {commentForm()}
+        <h2>Comments</h2>
+
         <ul>
           {comments.map((comment) => (
             <li key={comment._id}>{comment.text}</li>
           ))}
         </ul>
+        {commentForm()}
       </div>
     )
   }
 
   return (
     <div>
+      <hr />
       {title()}
       {url()}
       {likes()}
       {userInfo()}
       {comments()}
-      <button
-        id="back-button"
-        style={{ display: 'inline' }}
-        onClick={() => navigate('/')}
-      >
-        ⬅️ back to blogs
-      </button>
-      {deleteButton()}
+      <p style={{ marginTop: '20px' }}>
+        <Button
+          variant="outline-primary"
+          size="sm"
+          id="back-button"
+          style={{ display: 'inline' }}
+          onClick={() => navigate('/')}
+        >
+          ⬅️ back to blogs
+        </Button>
+      </p>
     </div>
   )
 }

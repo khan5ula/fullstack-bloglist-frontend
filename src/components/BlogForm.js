@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
+import { Button, Form } from 'react-bootstrap'
 
 const BlogForm = () => {
+  // TODO: After moving visibility to reducer, use dispatch to toggle visibility off after a blog has been created
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
 
@@ -38,45 +40,43 @@ const BlogForm = () => {
     setBlog({ title: '', author: '', url: '' })
   }
 
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <label className="formLabel" htmlFor="title">
-        title:
-      </label>
-      <input
-        id="title"
-        value={blog.title}
-        onChange={handleTitleChange}
-        placeholder="blog title"
-      />
+  return (
+    <div>
+      <h3>Create new blog</h3>
+      <Form onSubmit={addBlog}>
+        <Form.Group>
+          <Form.Label style={{ marginTop: '15px' }}>Title:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Blog Title"
+            value={blog.title}
+            onChange={handleTitleChange}
+            style={{ marginBottom: '10px', width: '50%' }}
+          />
+          <Form.Label>Author:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Blog Author"
+            value={blog.author}
+            onChange={handleAuthorChange}
+            style={{ marginBottom: '10px', width: '50%' }}
+          />
+          <Form.Label>URL:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Blog URL"
+            value={blog.url}
+            onChange={handleUrlChange}
+            style={{ marginBottom: '15px', width: '50%' }}
+          />
+        </Form.Group>
+        <Button variant="success" size="sm" type="submit">
+          create
+        </Button>
+      </Form>
       <br />
-      <label className="formLabel" htmlFor="title">
-        author:
-      </label>
-      <input
-        id="author"
-        value={blog.author}
-        onChange={handleAuthorChange}
-        placeholder="blog author"
-      />
-      <br />
-      <label className="formLabel" htmlFor="title">
-        url:
-      </label>
-      <input
-        id="url"
-        value={blog.url}
-        onChange={handleUrlChange}
-        placeholder="blog url"
-      />
-      <br />
-      <br />
-      <button id="create-blog-button" type="submit">
-        create
-      </button>
-    </form>
+    </div>
   )
-
   return (
     <div>
       <h2>create new</h2>

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../reducers/userReducer'
+import { Form, Button } from 'react-bootstrap'
 
 const LoginForm = ({}) => {
   const dispatch = useDispatch()
@@ -28,31 +29,35 @@ const LoginForm = ({}) => {
   }
 
   return (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
-          id="username-form"
-          type="text"
-          value={credentials.username}
-          name="Username"
-          onChange={handleUsernameChange}
-        />
-      </div>
-      <div>
-        password
-        <input
-          id="password-form"
-          type="password"
-          value={credentials.password}
-          name="Password"
-          onChange={handlePasswordChange}
-        />
-      </div>
-      <button id="login-button" type="submit">
-        login
-      </button>
-    </form>
+    <div className="container">
+      <Form onSubmit={handleLogin}>
+        <Form.Group>
+          <Form.Label style={{ marginTop: '15px' }}>username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="username"
+            name="username"
+            value={credentials.username}
+            id="username-form"
+            onChange={handleUsernameChange}
+            style={{ marginBottom: '10px', width: '50%' }}
+          />
+          <Form.Label>password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="password"
+            name="password"
+            value={credentials.password}
+            id="password-form"
+            onChange={handlePasswordChange}
+            style={{ marginBottom: '15px', width: '50%' }}
+          />
+        </Form.Group>
+        <Button variant="primary" size="sm" type="submit">
+          login
+        </Button>
+      </Form>
+    </div>
   )
 }
 

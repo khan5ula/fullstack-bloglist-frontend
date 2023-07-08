@@ -1,3 +1,4 @@
+import { Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
 const User = ({ user }) => {
@@ -20,27 +21,31 @@ const User = ({ user }) => {
 
     return (
       <div>
-        <h3>added blogs</h3>
+        <hr />
+        <h3>User's blogs:</h3>
         <ul>
           {user.blogs.map((blog) => (
             <li key={blog.id}>{blog.title}</li>
           ))}
         </ul>
+        <hr />
       </div>
     )
   }
 
   return (
-    <div>
+    <div style={{ marginTop: '20px' }}>
       <h2>{user.name}</h2>
       {listBlogs()}
-      <button
+      <Button
+        variant="outline-primary"
+        size="sm"
         id="back-button"
         style={{ display: 'inline' }}
         onClick={() => navigate('/users')}
       >
         ⬅️ back to users
-      </button>
+      </Button>
     </div>
   )
 }

@@ -1,11 +1,8 @@
 import { useState, useImperativeHandle, forwardRef } from 'react'
+import { Button, Card } from 'react-bootstrap'
 
 const Togglable = forwardRef((props, ref) => {
-  // TODO: manage visibility with reducer
   const [visible, setVisible] = useState(false)
-
-  const hideWhenVisible = { display: visible ? 'none' : '' }
-  const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -18,17 +15,26 @@ const Togglable = forwardRef((props, ref) => {
   })
 
   return (
-    <div>
-      <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>{props.buttonLabel}</button>
-      </div>
-      <div style={showWhenVisible} className="togglableContent">
-        {props.children}
-        <button id={props.id} onClick={toggleVisibility}>
-          cancel
-        </button>
-      </div>
-    </div>
+    <Card className="mt-4">
+      <Card.Body>
+        <div className={visible ? 'd-none' : ''}>
+          <Button variant="success" size="sm" onClick={toggleVisibility}>
+            {props.buttonLabel}
+          </Button>
+        </div>
+        <div className={visible ? '' : 'd-none'}>
+          {props.children}
+          <Button
+            variant="outline-warning"
+            size="sm"
+            id={props.id}
+            onClick={toggleVisibility}
+          >
+            cancel
+          </Button>
+        </div>
+      </Card.Body>
+    </Card>
   )
 })
 
