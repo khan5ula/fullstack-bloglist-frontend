@@ -1,12 +1,21 @@
+import { useNavigate } from 'react-router-dom'
+
 const User = ({ user }) => {
-  console.log(`user: ${JSON.stringify(user)}`)
+  const navigate = useNavigate()
+
   if (!user) {
     return null
   }
 
   const listBlogs = () => {
     if (!user.blogs || user.blogs.length === 0) {
-      return <div>{`${user.name} does not have any blogs`}</div>
+      return (
+        <div>
+          {`${user.name} does not have any blogs`}
+          <br />
+          <br />
+        </div>
+      )
     }
 
     return (
@@ -25,6 +34,13 @@ const User = ({ user }) => {
     <div>
       <h2>{user.name}</h2>
       {listBlogs()}
+      <button
+        id="back-button"
+        style={{ display: 'inline' }}
+        onClick={() => navigate('/users')}
+      >
+        ⬅️ back to users
+      </button>
     </div>
   )
 }

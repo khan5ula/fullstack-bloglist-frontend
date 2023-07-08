@@ -1,10 +1,12 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteBlog, likeBlog } from '../reducers/blogReducer'
+import { useNavigate } from 'react-router-dom'
 
 const Blog = ({ blog }) => {
   const user = useSelector((state) => state.user.currentUser)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleLike = (blog) => {
     dispatch(likeBlog(blog.id))
@@ -64,6 +66,13 @@ const Blog = ({ blog }) => {
       {url()}
       {likes()}
       {userInfo()}
+      <button
+        id="back-button"
+        style={{ display: 'inline' }}
+        onClick={() => navigate('/')}
+      >
+        ⬅️ back to blogs
+      </button>
       {deleteButton()}
     </div>
   )

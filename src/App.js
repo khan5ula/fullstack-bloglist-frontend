@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import LoginForm from './components/LoginForm'
+import Menu from './components/Menu'
 import Notification from './components/Notification'
 import User from './components/User'
 import Users from './components/Users'
@@ -9,8 +10,8 @@ import { setNotification } from './reducers/notificationReducer'
 import { getUsers, setUser } from './reducers/userReducer'
 
 import { Route, Routes, useMatch } from 'react-router-dom'
-import BlogList from './components/BlogList'
 import Blog from './components/Blog'
+import BlogList from './components/BlogList'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -63,6 +64,7 @@ const App = () => {
   return (
     <div>
       <Notification />
+      <Menu />
       <p>
         {'\u{1F464} '}
         {`${user.name} `}

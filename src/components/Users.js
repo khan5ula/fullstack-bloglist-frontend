@@ -17,10 +17,10 @@ const Users = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <td style={{ paddingRight: '20px' }}>
+              <td style={{ paddingRight: '30px' }}>
                 {<Link to={`/users/${user.id}`}>{user.name}</Link>}
               </td>
-              <td>{user.blogs.length}</td>
+              <td style={{ textAlign: 'right' }}>{user.blogs.length}</td>
             </tr>
           ))}
         </tbody>
