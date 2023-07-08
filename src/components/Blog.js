@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteBlog, likeBlog } from '../reducers/blogReducer'
 import { useNavigate } from 'react-router-dom'
+import { commentBlog, deleteBlog, likeBlog } from '../reducers/blogReducer'
 
 const Blog = ({ blog }) => {
   const user = useSelector((state) => state.user.currentUser)
+  const [newComment, setNewComment] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -64,15 +65,42 @@ const Blog = ({ blog }) => {
     }
   }
 
+  const addComment = async (event) => {
+    event.preventDefault()
+    dispatch(commentBlog(blog.id, newComment))
+    setNewComment('')
+  }
+
+  const handleCommentChange = (event) => {
+    setNewComment(event.target.value)
+  }
+
+  const commentForm = () => {
+    return (
+      <div>
+        <form onSubmit={addComment}>
+          <input
+            type="text"
+            value={newComment}
+            onChange={handleCommentChange}
+          />
+          <button id="create-blog-button" type="submit">
+            add comment
+          </button>
+        </form>
+      </div>
+    )
+  }
+
   const comments = () => {
     const comments = blog.comments
     if (!comments) {
-      return null
+      commentForm()
     }
     return (
       <div>
-        {' '}
         <h2>comments</h2>
+        {commentForm()}
         <ul>
           {comments.map((comment) => (
             <li key={comment._id}>{comment.text}</li>

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import Notification from './Notification'
 
 const Menu = () => {
   const padding = {

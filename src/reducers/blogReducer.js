@@ -59,6 +59,22 @@ export const createBlog = (newBlog) => {
   }
 }
 
+export const commentBlog = (id, comment) => {
+  return async (dispatch) => {
+    try {
+      await blogService.createComment(id, { comment })
+      dispatch(dispatch(setBlogs(await blogService.getAll())))
+      dispatch(setNotification(`comment posted`))
+    } catch (error) {
+      dispatch(
+        setNotification(
+          `error: commenting failed: ${error.response.data.error}`
+        )
+      )
+    }
+  }
+}
+
 export const likeBlog = (id) => {
   return async (dispatch) => {
     try {
