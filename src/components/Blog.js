@@ -8,6 +8,10 @@ const Blog = ({ blog }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  if (!blog) {
+    return null
+  }
+
   const handleLike = (blog) => {
     dispatch(likeBlog(blog.id))
   }
@@ -60,12 +64,31 @@ const Blog = ({ blog }) => {
     }
   }
 
+  const comments = () => {
+    const comments = blog.comments
+    if (!comments) {
+      return null
+    }
+    return (
+      <div>
+        {' '}
+        <h2>comments</h2>
+        <ul>
+          {comments.map((comment) => (
+            <li key={comment._id}>{comment.text}</li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
   return (
     <div>
       {title()}
       {url()}
       {likes()}
       {userInfo()}
+      {comments()}
       <button
         id="back-button"
         style={{ display: 'inline' }}
