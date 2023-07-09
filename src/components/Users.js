@@ -8,17 +8,12 @@ const Users = () => {
 
   return (
     <div>
-      <Table bordered style={{ marginTop: '20px' }}>
+      <Table striped bordered hover style={{ marginTop: '20px' }}>
         <thead>
           <tr>
-            <th colSpan={2}>
-              <h2>Users</h2>
+            <th>
+              <h3>Users</h3>
             </th>
-          </tr>
-        </thead>
-        <thead>
-          <tr>
-            <th>User</th>
             <th>Blogs Created</th>
           </tr>
         </thead>

@@ -1,4 +1,4 @@
-import { Button } from 'react-bootstrap'
+import { Button, Card, CloseButton } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
 const User = ({ user }) => {
@@ -34,19 +34,22 @@ const User = ({ user }) => {
   }
 
   return (
-    <div style={{ marginTop: '20px' }}>
-      <h2>{user.name}</h2>
-      {listBlogs()}
-      <Button
-        variant="outline-primary"
-        size="sm"
-        id="back-button"
-        style={{ display: 'inline' }}
-        onClick={() => navigate('/users')}
+    <Card style={{ marginTop: '20px' }}>
+      <Card.Header
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
       >
-        ⬅️ back to users
-      </Button>
-    </div>
+        <span>User details</span>
+        {<CloseButton onClick={() => navigate('/users')} />}
+      </Card.Header>
+      <Card.Body>
+        <h2>{user.name}</h2>
+        {listBlogs()}
+      </Card.Body>
+    </Card>
   )
 }
 

@@ -66,6 +66,7 @@ const App = () => {
         <Col xs={1} md={2}></Col>
         <Col>
           <Menu user={user} />
+          <Notification />
           <Routes>
             <Route path="/users" element={<Users />} />
             <Route path="/users/:id" element={<User user={viewUser} />} />

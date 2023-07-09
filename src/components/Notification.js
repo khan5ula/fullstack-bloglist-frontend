@@ -10,7 +10,14 @@ const Notification = () => {
     return (
       <Container>
         {notification && (
-          <Alert variant="info" onClose={() => setShow(false)} dismissible>
+          <Alert
+            variant="info"
+            onClose={() => setShow(false)}
+            dismissible
+            style={{
+              marginTop: '20px',
+            }}
+          >
             {notification}
           </Alert>
         )}

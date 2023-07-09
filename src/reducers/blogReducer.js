@@ -88,8 +88,6 @@ export const likeBlog = (id) => {
       dispatch(
         setBlogs(blogs.sort((blogA, blogB) => blogB.likes - blogA.likes))
       )
-      // remove this later
-      dispatch(setNotification('test'))
     } catch (error) {
       dispatch(setNotification(`error: like failed: ${error.response.data}`))
     }

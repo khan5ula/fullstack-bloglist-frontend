@@ -6,7 +6,6 @@ import Togglable from './Togglable'
 import { Table } from 'react-bootstrap'
 
 const BlogList = () => {
-  const blogFormRef = useRef()
   const blogs = useSelector((state) => state.blogs)
 
   return (
@@ -14,17 +13,18 @@ const BlogList = () => {
       <Togglable
         header="Create a new blog"
         buttonLabel="Get started"
-        ref={blogFormRef}
         id="create-new-blog-button"
       >
         <BlogForm />
       </Togglable>
-      <Table bordered style={{ marginTop: '20px' }}>
+      <Table striped bordered hover style={{ marginTop: '20px' }}>
         <thead>
           <tr>
             <th>
               <h2>Blogs</h2>
             </th>
+            <th>{`👍`}</th>
+            <th>{`💬`}</th>
             <th>Posted by</th>
           </tr>
         </thead>
@@ -34,6 +34,8 @@ const BlogList = () => {
               <td>
                 <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
               </td>
+              <td>{blog.likes}</td>
+              <td>{blog.comments.length}</td>
               <td>
                 {`🧑🏼‍💼 `}
                 {blog.user.name}{' '}

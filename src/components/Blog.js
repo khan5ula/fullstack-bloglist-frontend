@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { commentBlog, deleteBlog, likeBlog } from '../reducers/blogReducer'
-import { Button, Card, Form } from 'react-bootstrap'
+import { Button, Card, Form, CloseButton } from 'react-bootstrap'
 
 const Blog = ({ blog }) => {
   const user = useSelector((state) => state.user.currentUser)
@@ -136,6 +136,16 @@ const Blog = ({ blog }) => {
 
   return (
     <Card style={{ marginTop: '20px' }}>
+      <Card.Header
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <span>Blog details</span>
+        {<CloseButton onClick={() => navigate('/')} />}
+      </Card.Header>
       <Card.Body>
         {title()}
         {url()}
@@ -143,17 +153,6 @@ const Blog = ({ blog }) => {
         {userInfo()}
         {comments()}
       </Card.Body>
-      <Card.Footer>
-        <Button
-          variant="outline-secondary"
-          size="sm"
-          id="back-button"
-          style={{ display: 'inline' }}
-          onClick={() => navigate('/')}
-        >
-          back to blogs
-        </Button>
-      </Card.Footer>
     </Card>
   )
 }

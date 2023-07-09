@@ -17,7 +17,7 @@ export const setNotification = (content) => {
     dispatch(set(content))
     setTimeout(() => {
       dispatch(set(initialState))
-    }, 5000)
+    }, 3000)
   }
 }
 

@@ -1,22 +1,27 @@
-import { useState, useImperativeHandle, forwardRef } from 'react'
-import { Button, Card } from 'react-bootstrap'
+import { Button, Card, CloseButton } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { setVisibility } from '../reducers/visibilityReducer'
 
-const Togglable = forwardRef((props, ref) => {
-  const [visible, setVisible] = useState(false)
+const Togglable = (props) => {
+  const visible = useSelector((state) => state.visibility)
+  const dispatch = useDispatch()
 
   const toggleVisibility = () => {
-    setVisible(!visible)
+    dispatch(setVisibility())
   }
-
-  useImperativeHandle(ref, () => {
-    return {
-      toggleVisibility,
-    }
-  })
 
   return (
     <Card className="mt-4">
-      <Card.Header>{props.header}</Card.Header>
+      <Card.Header
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <span>{props.header}</span>
+        {visible && <CloseButton onClick={toggleVisibility} />}
+      </Card.Header>
       <Card.Body>
         <div className={visible ? 'd-none' : ''}>
           <Button variant="success" size="sm" onClick={toggleVisibility}>
@@ -25,22 +30,8 @@ const Togglable = forwardRef((props, ref) => {
         </div>
         <div className={visible ? '' : 'd-none'}>{props.children}</div>
       </Card.Body>
-      {visible && (
-        <Card.Footer>
-          <Button
-            variant="outline-secondary"
-            size="sm"
-            id={props.id}
-            onClick={toggleVisibility}
-          >
-            close
-          </Button>
-        </Card.Footer>
-      )}
     </Card>
   )
-})
-
-Togglable.displayName = 'Togglable'
+}
 
 export default Togglable

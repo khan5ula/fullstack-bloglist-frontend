@@ -1,9 +1,8 @@
+import { Button, Nav, Navbar } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Navbar, Nav, Button } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import { setUser } from '../reducers/userReducer'
-import Notification from './Notification'
 
 const Menu = ({ user }) => {
   const dispatch = useDispatch()
@@ -18,11 +17,7 @@ const Menu = ({ user }) => {
     dispatch(setUser(null))
   }
 
-  const notification = useSelector((state) => state.notification)
-
-  return notification ? (
-    <Notification />
-  ) : (
+  return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
