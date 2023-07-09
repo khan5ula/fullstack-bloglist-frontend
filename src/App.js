@@ -8,6 +8,7 @@ import Users from './components/Users'
 import { initializeBlogs } from './reducers/blogReducer'
 import { getUsers, setUser } from './reducers/userReducer'
 
+import { Col, Container, Row } from 'react-bootstrap'
 import { Route, Routes, useMatch } from 'react-router-dom'
 import Blog from './components/Blog'
 import BlogList from './components/BlogList'
@@ -36,16 +37,6 @@ const App = () => {
     }
   }, [dispatch])
 
-  if (user === null) {
-    return (
-      <div className="container" style={{ marginTop: '10px' }}>
-        <Notification />
-        <h2>Log in to application</h2>
-        <LoginForm />
-      </div>
-    )
-  }
-
   const viewUser = matchUser
     ? users.find((a) => a.id === matchUser.params.id)
     : null
@@ -54,19 +45,38 @@ const App = () => {
     ? blogs.find((a) => a.id === matchBlog.params.id)
     : null
 
-  return (
-    <div className="container" style={{ marginTop: '10px' }}>
-      <Notification />
-      <Menu user={user} />
+  if (user === null) {
+    return (
+      <Container style={{ marginTop: '10px' }}>
+        <Row>
+          <Col xs={1} md={4}></Col>
+          <Col xs={10} md={4}>
+            <Notification />
+            <LoginForm />
+          </Col>
+          <Col xs={1} md={4}></Col>
+        </Row>
+      </Container>
+    )
+  }
 
-      <Routes>
-        <Route path="/users" element={<Users />} />
-        <Route path="/users/:id" element={<User user={viewUser} />} />
-        <Route path="/blogs/:id" element={<Blog blog={viewBlog} />} />
-        <Route path="/" element={<BlogList />} />
-        <Route path="/blogs" element={<BlogList />} />
-      </Routes>
-    </div>
+  return (
+    <Container style={{ marginTop: '10px' }}>
+      <Row>
+        <Col xs={1} md={2}></Col>
+        <Col>
+          <Menu user={user} />
+          <Routes>
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/:id" element={<User user={viewUser} />} />
+            <Route path="/blogs/:id" element={<Blog blog={viewBlog} />} />
+            <Route path="/" element={<BlogList />} />
+            <Route path="/blogs" element={<BlogList />} />
+          </Routes>
+        </Col>
+        <Col xs={1} md={2}></Col>
+      </Row>
+    </Container>
   )
 }
 

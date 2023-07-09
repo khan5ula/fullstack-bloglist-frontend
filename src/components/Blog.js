@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { commentBlog, deleteBlog, likeBlog } from '../reducers/blogReducer'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Card, Form } from 'react-bootstrap'
 
 const Blog = ({ blog }) => {
   const user = useSelector((state) => state.user.currentUser)
@@ -32,13 +32,16 @@ const Blog = ({ blog }) => {
     </div>
   )
 
-  const userInfo = () => (
-    <div>
-      {'\u{1F464}'} {blog.user.name}
-      <p style={{ marginTop: '10px' }}>{deleteButton()}</p>
-      <hr />
-    </div>
-  )
+  const userInfo = () => {
+    return (
+      <div>
+        Posted by {`🧑🏼‍💼`}{' '}
+        {blog.user.username === user.username ? 'You' : blog.user.name}
+        <p style={{ marginTop: '10px' }}>{deleteButton()}</p>
+        <hr />
+      </div>
+    )
+  }
 
   const likes = () => (
     <div>
@@ -60,7 +63,7 @@ const Blog = ({ blog }) => {
     if (blog.user.username === user.username) {
       return (
         <Button variant="danger" size="sm" onClick={handleDelete}>
-          remove
+          delete blog
         </Button>
       )
     }
@@ -132,25 +135,26 @@ const Blog = ({ blog }) => {
   }
 
   return (
-    <div>
-      <hr />
-      {title()}
-      {url()}
-      {likes()}
-      {userInfo()}
-      {comments()}
-      <p style={{ marginTop: '20px' }}>
+    <Card style={{ marginTop: '20px' }}>
+      <Card.Body>
+        {title()}
+        {url()}
+        {likes()}
+        {userInfo()}
+        {comments()}
+      </Card.Body>
+      <Card.Footer>
         <Button
-          variant="outline-primary"
+          variant="outline-secondary"
           size="sm"
           id="back-button"
           style={{ display: 'inline' }}
           onClick={() => navigate('/')}
         >
-          ⬅️ back to blogs
+          back to blogs
         </Button>
-      </p>
-    </div>
+      </Card.Footer>
+    </Card>
   )
 }
 

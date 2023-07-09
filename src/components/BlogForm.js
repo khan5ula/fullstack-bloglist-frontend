@@ -42,10 +42,9 @@ const BlogForm = () => {
 
   return (
     <div>
-      <h3>Create new blog</h3>
       <Form onSubmit={addBlog}>
         <Form.Group>
-          <Form.Label style={{ marginTop: '15px' }}>Title:</Form.Label>
+          <Form.Label>Title:</Form.Label>
           <Form.Control
             type="text"
             placeholder="Blog Title"
@@ -74,14 +73,6 @@ const BlogForm = () => {
           create
         </Button>
       </Form>
-      <br />
-    </div>
-  )
-  return (
-    <div>
-      <h2>create new</h2>
-      {blogForm()}
-      <br />
     </div>
   )
 }

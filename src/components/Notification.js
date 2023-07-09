@@ -1,14 +1,22 @@
+import { useState } from 'react'
+import { Alert, Container, Button } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
-import { Alert } from 'react-bootstrap'
 
 const Notification = () => {
+  const [show, setShow] = useState(true)
   const notification = useSelector((state) => state.notification)
-  return (
-    <div className="container">
-      {' '}
-      {notification && <Alert variant="success"> {notification} </Alert>}
-    </div>
-  )
+
+  if (show) {
+    return (
+      <Container>
+        {notification && (
+          <Alert variant="info" onClose={() => setShow(false)} dismissible>
+            {notification}
+          </Alert>
+        )}
+      </Container>
+    )
+  }
 }
 
 export default Notification

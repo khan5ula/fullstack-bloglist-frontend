@@ -12,19 +12,31 @@ const BlogList = () => {
   return (
     <div style={{ marginTop: '20px' }}>
       <Togglable
-        buttonLabel="create new blog"
+        header="Create a new blog"
+        buttonLabel="Get started"
         ref={blogFormRef}
         id="create-new-blog-button"
       >
         <BlogForm />
       </Togglable>
-      <h2 style={{ marginTop: '20px' }}>blogs</h2>
-      <Table striped>
+      <Table bordered style={{ marginTop: '20px' }}>
+        <thead>
+          <tr>
+            <th>
+              <h2>Blogs</h2>
+            </th>
+            <th>Posted by</th>
+          </tr>
+        </thead>
         <tbody>
           {blogs.map((blog) => (
             <tr key={blog.id}>
               <td>
                 <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+              </td>
+              <td>
+                {`🧑🏼‍💼 `}
+                {blog.user.name}{' '}
               </td>
             </tr>
           ))}

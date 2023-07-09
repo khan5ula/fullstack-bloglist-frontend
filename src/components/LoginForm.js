@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../reducers/userReducer'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Container, Row, Col } from 'react-bootstrap'
 
 const LoginForm = ({}) => {
   const dispatch = useDispatch()
@@ -29,7 +29,8 @@ const LoginForm = ({}) => {
   }
 
   return (
-    <div className="container">
+    <Container>
+      <h2 style={{ marginTop: '20px' }}>Log in to application</h2>
       <Form onSubmit={handleLogin}>
         <Form.Group>
           <Form.Label style={{ marginTop: '15px' }}>username</Form.Label>
@@ -40,7 +41,7 @@ const LoginForm = ({}) => {
             value={credentials.username}
             id="username-form"
             onChange={handleUsernameChange}
-            style={{ marginBottom: '10px', width: '50%' }}
+            style={{ marginBottom: '10px' }}
           />
           <Form.Label>password</Form.Label>
           <Form.Control
@@ -50,14 +51,14 @@ const LoginForm = ({}) => {
             value={credentials.password}
             id="password-form"
             onChange={handlePasswordChange}
-            style={{ marginBottom: '15px', width: '50%' }}
+            style={{ marginBottom: '15px' }}
           />
         </Form.Group>
         <Button variant="primary" size="sm" type="submit">
           login
         </Button>
       </Form>
-    </div>
+    </Container>
   )
 }
 

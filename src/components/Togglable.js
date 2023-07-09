@@ -16,24 +16,27 @@ const Togglable = forwardRef((props, ref) => {
 
   return (
     <Card className="mt-4">
+      <Card.Header>{props.header}</Card.Header>
       <Card.Body>
         <div className={visible ? 'd-none' : ''}>
           <Button variant="success" size="sm" onClick={toggleVisibility}>
             {props.buttonLabel}
           </Button>
         </div>
-        <div className={visible ? '' : 'd-none'}>
-          {props.children}
+        <div className={visible ? '' : 'd-none'}>{props.children}</div>
+      </Card.Body>
+      {visible && (
+        <Card.Footer>
           <Button
-            variant="outline-warning"
+            variant="outline-secondary"
             size="sm"
             id={props.id}
             onClick={toggleVisibility}
           >
-            cancel
+            close
           </Button>
-        </div>
-      </Card.Body>
+        </Card.Footer>
+      )}
     </Card>
   )
 })
