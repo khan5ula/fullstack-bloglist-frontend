@@ -46,7 +46,10 @@ const User = ({ user }) => {
         {<CloseButton onClick={() => navigate('/users')} />}
       </Card.Header>
       <Card.Body>
-        <h2>{user.name}</h2>
+        <h2>
+          {`🧑🏼‍💼 `}
+          {user.name}
+        </h2>
         {listBlogs()}
       </Card.Body>
     </Card>

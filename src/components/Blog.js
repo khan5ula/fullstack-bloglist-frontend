@@ -1,14 +1,23 @@
 import React, { useState } from 'react'
+import {
+  Button,
+  Card,
+  CloseButton,
+  Container,
+  Form,
+  Modal,
+} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { commentBlog, deleteBlog, likeBlog } from '../reducers/blogReducer'
-import { Button, Card, Form, CloseButton } from 'react-bootstrap'
+import { commentBlog, likeBlog, deleteBlog } from '../reducers/blogReducer'
 
 const Blog = ({ blog }) => {
   const user = useSelector((state) => state.user.currentUser)
   const [newComment, setNewComment] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
 
   if (!blog) {
     return null
@@ -28,41 +37,36 @@ const Blog = ({ blog }) => {
   const url = () => (
     <div>
       Find out more: <a href={blog.url}>{blog.url}</a>
-      <br />
     </div>
   )
 
-  const userInfo = () => {
-    return (
-      <div>
-        Posted by {`🧑🏼‍💼`}{' '}
-        {blog.user.username === user.username ? 'You' : blog.user.name}
-        <p style={{ marginTop: '10px' }}>{deleteButton()}</p>
-        <hr />
-      </div>
-    )
-  }
+  const userInfo = () => (
+    <div>
+      Posted by {`🧑🏼‍💼`}{' '}
+      {blog.user.username === user.username ? 'You' : blog.user.name}
+    </div>
+  )
 
   const likes = () => (
     <div>
       Likes: {blog.likes}{' '}
-      <p style={{ marginTop: '5px' }}>
+      <Container style={{ marginTop: '10px', marginBottom: '10px' }}>
         <Button
-          variant="success"
+          variant="outline-success"
           size="sm"
           id="like-button"
           onClick={() => handleLike(blog)}
         >
-          like
+          {`like 👍`}
         </Button>
-      </p>
+      </Container>
     </div>
   )
 
   const deleteButton = () => {
     if (blog.user.username === user.username) {
       return (
-        <Button variant="danger" size="sm" onClick={handleDelete}>
+        <Button variant="danger" size="sm" onClick={() => setShow(!show)}>
           delete blog
         </Button>
       )
@@ -70,15 +74,35 @@ const Blog = ({ blog }) => {
     return null
   }
 
-  const handleDelete = (event) => {
-    const removedTitle = blog.title
-    event.preventDefault()
-
-    if (
-      window.confirm(`Are you sure you want to remove blog ${removedTitle}?`)
-    ) {
-      dispatch(deleteBlog(blog.id))
+  const deleteModal = () => {
+    if (!show) {
+      return null
     }
+
+    return (
+      <>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header>
+            <Modal.Title>Confirmation required</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{`Do you want to delete blog: ${blog.title}?`}</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="danger" onClick={handleBlogDeletion}>
+              Confirm delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    )
+  }
+
+  const handleBlogDeletion = () => {
+    dispatch(deleteBlog(blog.id))
+    setShow(false)
+    navigate('/blogs')
   }
 
   const addComment = async (event) => {
@@ -97,19 +121,28 @@ const Blog = ({ blog }) => {
         <Form onSubmit={addComment}>
           <Form.Control
             placeholder="add..."
-            style={{ marginBottom: '10px', width: '50%' }}
+            style={{ marginBottom: '10px' }}
             as="textarea"
             value={newComment}
             onChange={handleCommentChange}
           />
-          <Button
-            variant="primary"
-            size="sm"
-            id="create-blog-button"
-            type="submit"
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
           >
-            add comment
-          </Button>
+            <Button
+              variant="outline-primary"
+              size="sm"
+              id="create-blog-button"
+              type="submit"
+            >
+              add comment
+            </Button>
+            {deleteButton()}
+          </div>
         </Form>
       </div>
     )
@@ -135,25 +168,28 @@ const Blog = ({ blog }) => {
   }
 
   return (
-    <Card style={{ marginTop: '20px' }}>
-      <Card.Header
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <span>Blog details</span>
-        {<CloseButton onClick={() => navigate('/')} />}
-      </Card.Header>
-      <Card.Body>
-        {title()}
-        {url()}
-        {likes()}
-        {userInfo()}
-        {comments()}
-      </Card.Body>
-    </Card>
+    <div>
+      {deleteModal()}
+      <Card style={{ marginTop: '20px' }}>
+        <Card.Header
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <span>Blog details</span>
+          {<CloseButton onClick={() => navigate('/')} />}
+        </Card.Header>
+        <Card.Body>
+          {title()}
+          {url()}
+          {userInfo()}
+          {likes()}
+          {comments()}
+        </Card.Body>
+      </Card>
+    </div>
   )
 }
 

@@ -1,12 +1,13 @@
 import { useState } from 'react'
+import { Button, Container, Form, Spinner } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../reducers/userReducer'
-import { Form, Button, Container, Row, Col } from 'react-bootstrap'
 
 const LoginForm = ({}) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [spin, setSpin] = useState(false)
 
   const [credentials, setCredentials] = useState({
     username: '',
@@ -23,14 +24,38 @@ const LoginForm = ({}) => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    dispatch(login(credentials))
+    setSpin(true)
+    try {
+      dispatch(login(credentials))
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setTimeout(() => {
+        setSpin(false)
+      }, 1500)
+    }
     setCredentials({ username: '', password: '' })
-    navigate('/')
   }
+
+  const spinner = () => (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '10vh',
+      }}
+    >
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    </div>
+  )
 
   return (
     <Container>
-      <h2 style={{ marginTop: '20px' }}>Log in to application</h2>
+      <h2 style={{ marginTop: '20px' }}>Log in to use Blog App</h2>
+      {spin && spinner()}
       <Form onSubmit={handleLogin}>
         <Form.Group>
           <Form.Label style={{ marginTop: '15px' }}>username</Form.Label>

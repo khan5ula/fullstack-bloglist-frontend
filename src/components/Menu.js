@@ -1,11 +1,14 @@
 import { Button, Nav, Navbar } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { setNotification } from '../reducers/notificationReducer'
 import { setUser } from '../reducers/userReducer'
+import { current } from '@reduxjs/toolkit'
 
 const Menu = ({ user }) => {
   const dispatch = useDispatch()
+  const users = useSelector((state) => state.user.allUsers)
+  const currentUser = users.find((u) => u.username === user.username)
 
   const padding = {
     paddingLeft: 10,
@@ -15,6 +18,10 @@ const Menu = ({ user }) => {
     window.localStorage.removeItem('loggedBlogUser')
     dispatch(setNotification(`${user.name} logged out`))
     dispatch(setUser(null))
+  }
+
+  if (!currentUser) {
+    return null
   }
 
   return (
@@ -44,7 +51,7 @@ const Menu = ({ user }) => {
             }}
           >
             {`🧑🏼‍💼 `}
-            {`${user.name} `}
+            <Link to={`/users/${currentUser.id}`}>{user.name}</Link>
             <Button
               variant="outline-danger"
               size="sm"
